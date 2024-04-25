@@ -5,11 +5,14 @@ USE red_social;
 CREATE TABLE IF NOT EXISTS wins(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(100),
+    description TEXT,
+    verified BOOLEAN,
     rewards_points DOUBLE
 );
 
 CREATE TABLE IF NOT EXISTS rewards(
 	id INT PRIMARY KEY AUTO_INCREMENT,
+    description TEXT,
 	name VARCHAR(100),
     price_points DOUBLE
 );
@@ -29,6 +32,7 @@ CREATE TABLE IF NOT EXISTS user(
 CREATE TABLE IF NOT EXISTS profile(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     FOREIGN KEY (id) REFERENCES user(id),
+    profile_image BLOB,
     name VARCHAR(100),
     lastname VARCHAR(100)
 );
