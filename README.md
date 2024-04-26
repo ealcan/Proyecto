@@ -1,8 +1,8 @@
 # PROYECTO FINAL
-## UNICORN TEAM presenta: *EcoSocial: La Red Social del Futuro*
+## UNICORN TEAM 🦄 presenta: *EcoSocial: La Red Social del Futuro*
 
 ### Front End
-- Dani
+- Dani c
 - Sheherezade
 ### Back End
 - Albert 
