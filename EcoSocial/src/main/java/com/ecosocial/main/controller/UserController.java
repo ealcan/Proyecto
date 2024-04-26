@@ -5,8 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ecosocial.main.entities.User;
+import com.ecosocial.main.entities.*;
 import com.ecosocial.main.repository.UserRepository;
+import com.ecosocial.main.repository.WinsRepository;
+import com.ecosocial.main.repository.RewardsRepository;
+import com.ecosocial.main.services.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +20,15 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private WinsRepository winRepository;
+
+    @Autowired
+    private RewardsRepository rewardRepository;
+    
+    @Autowired
+    private UserService userService;
 
     // Obtener todos los usuarios
     @GetMapping
@@ -38,7 +50,13 @@ public class UserController {
 
     // Crear un nuevo usuario
     @PostMapping("/")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        // Verificar si el nombre de usuario ya existe en la base de datos
+        if (userRepository.existsByUsername(user.getUsername())) {
+            return new ResponseEntity<>("El nombre de usuario ya está en uso.", HttpStatus.BAD_REQUEST);
+        }
+
+        // Si el nombre de usuario no existe, crear el usuario
         User createdUser = userRepository.save(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
@@ -66,6 +84,34 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    //Test Area
+    
+    @PostMapping("/{userId}/assign-win/{winId}")
+    public ResponseEntity<?> assignWinToUser(@PathVariable Integer userId, @PathVariable Integer winId) {
+        User user = userRepository.findById(userId).orElse(null);
+        Wins win = winRepository.findById(winId).orElse(null);
+
+        if (user == null || win == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        userService.assignWin(user, win);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{userId}/assign-reward/{rewardId}")
+    public ResponseEntity<?> assignRewardToUser(@PathVariable Integer userId, @PathVariable Integer rewardId) {
+        User user = userRepository.findById(userId).orElse(null);
+        Rewards reward = rewardRepository.findById(rewardId).orElse(null);
+
+        if (user == null || reward == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        userService.assignReward(user, reward);
+        return ResponseEntity.ok().build();
     }
 }
 
