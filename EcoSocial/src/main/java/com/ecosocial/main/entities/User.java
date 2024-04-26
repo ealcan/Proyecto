@@ -9,6 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -35,6 +38,8 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "id_reward")
     private Rewards reward;
+    
+    // Getters y setters
 
 	public int getId() {
 		return id;
@@ -57,8 +62,9 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
-	}
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
+    }
 
 	public String getEmail() {
 		return email;
@@ -92,7 +98,7 @@ public class User {
 		this.reward = reward;
 	}
 
-    // Getters y setters
+
     
 }
 
