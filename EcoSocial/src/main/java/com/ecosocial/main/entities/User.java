@@ -1,15 +1,21 @@
 package com.ecosocial.main.entities;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Entity
@@ -34,16 +40,31 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "id_wins")
     private Wins wins;
-
-    @ManyToOne
-    @JoinColumn(name = "id_reward")
-    private Rewards reward;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "user_reward",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "reward_id")
+    )
+    private Set<Rewards> rewards = new HashSet<>();
     
     // Getters y setters
 
 	public int getId() {
 		return id;
 	}
+
+	
+	public Set<Rewards> getRewards() {
+		return rewards;
+	}
+
+
+	public void setRewards(Set<Rewards> rewards) {
+		this.rewards = rewards;
+	}
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -89,16 +110,6 @@ public class User {
 	public void setWins(Wins wins) {
 		this.wins = wins;
 	}
-
-	public Rewards getReward() {
-		return reward;
-	}
-
-	public void setReward(Rewards reward) {
-		this.reward = reward;
-	}
-
-
-    
+	
 }
 

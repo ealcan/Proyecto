@@ -113,5 +113,6 @@ public class UserController {
         userService.assignReward(user, reward);
         return ResponseEntity.ok().build();
     }
+    
 }
 
