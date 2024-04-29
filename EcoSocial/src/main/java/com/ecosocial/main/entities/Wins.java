@@ -1,10 +1,18 @@
 package com.ecosocial.main.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +33,10 @@ public class Wins {
 
     @Column(name = "rewards_points")
     private double rewardsPoints;
+    
+    @JsonIgnore
+    @ManyToMany(mappedBy = "wins")
+    private List<User> users = new ArrayList<>();
 
 	public int getId() {
 		return id;
@@ -65,7 +77,16 @@ public class Wins {
 	public void setRewardsPoints(double rewardsPoints) {
 		this.rewardsPoints = rewardsPoints;
 	}
-    
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+	    this.users.addAll(users);
+	}
+
+
     //Getters and Setters
     
     

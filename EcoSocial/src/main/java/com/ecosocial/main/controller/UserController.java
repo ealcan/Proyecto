@@ -92,12 +92,13 @@ public class UserController {
     public ResponseEntity<?> assignWinToUser(@PathVariable Integer userId, @PathVariable Integer winId) {
         User user = userRepository.findById(userId).orElse(null);
         Wins win = winRepository.findById(winId).orElse(null);
+        
 
         if (user == null || win == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        userService.assignWin(user, win);
+        userService.assignWin(userId, winId);
         return ResponseEntity.ok().build();
     }
 
@@ -110,7 +111,7 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
 
-        userService.assignReward(user, reward);
+        userService.assignReward(userId, rewardId);
         return ResponseEntity.ok().build();
     }
 }

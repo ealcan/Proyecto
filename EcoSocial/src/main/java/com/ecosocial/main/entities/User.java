@@ -2,12 +2,18 @@ package com.ecosocial.main.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -31,13 +37,16 @@ public class User {
     @Column(name = "points")
     private double points;
 
-    @ManyToOne
-    @JoinColumn(name = "id_wins")
-    private Wins wins;
+    @ManyToMany
+    @JoinTable(
+        name = "user_wins",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "win_id"))
+    private List<Wins> wins = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "id_reward")
-    private Rewards reward;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Rewards> rewards;
     
     // Getters y setters
 
@@ -82,21 +91,22 @@ public class User {
 		this.points = points;
 	}
 
-	public Wins getWins() {
+	public List<Wins> getUserWins() {
 		return wins;
 	}
 
-	public void setWins(Wins wins) {
-		this.wins = wins;
+	public void setUserWins(Wins wins) {
+		this.wins.add(wins);
 	}
 
-	public Rewards getReward() {
-		return reward;
+	public List<Rewards> getUserRewards() {
+		return rewards;
 	}
 
-	public void setReward(Rewards reward) {
-		this.reward = reward;
+	public void setUserRewards(Rewards rewards) {
+		this.rewards.add(rewards);
 	}
+
 
 
     
