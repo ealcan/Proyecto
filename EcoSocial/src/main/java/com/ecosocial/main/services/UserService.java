@@ -28,12 +28,20 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void assignReward(User user, Rewards reward) {
-        user.setPoints(user.getPoints() - reward.getPricePoints());
-         
-        // TODO: user.setRewards(new ArrayList<Rewards>()); si la lista es NULL
-        user.getRewards().add(reward);
-        userRepository.save(user);
+    public String assignReward(User user, Rewards reward) {
+    	if (user.getPoints() < reward.getPricePoints()) {
+    		
+    		return "No tienes puntos suficientes ¡Sigue trabajando!";
+    	}
+    	else {
+            user.setPoints(user.getPoints() - reward.getPricePoints());
+            
+            // TODO: user.setRewards(new ArrayList<Rewards>()); si la lista es NULL
+            user.getRewards().add(reward);
+            userRepository.save(user);
+            return "¡Felicidades! Has reclamado tu premio";
+    	}
+    	
     }
     
     public void assignRewardToUser(Integer userId, Integer rewardsId) {
