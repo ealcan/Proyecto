@@ -17,7 +17,34 @@ public class RewardsDto implements Serializable {
 
     private String name;
 
-    private double pricePoints;   
+    private double pricePoints;
+    
+    //Getters y Setters
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getPricePoints() {
+		return pricePoints;
+	}
+
+	public void setPricePoints(double pricePoints) {
+		this.pricePoints = pricePoints;
+	}   
+    
     
 	
 }

@@ -37,9 +37,13 @@ public class User {
     @Column(name = "points")
     private double points;
 
-    @ManyToOne
-    @JoinColumn(name = "id_wins")
-    private Wins wins;
+    @ManyToMany
+    @JoinTable(
+        name = "user_wins",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "wins_id")
+    )
+    private Set<Wins> wins = new HashSet<>();
     
     @ManyToMany
     @JoinTable(
@@ -65,6 +69,15 @@ public class User {
 		this.rewards = rewards;
 	}
 
+	
+	public Set<Wins> getWins() {
+		return wins;
+	}
+
+
+	public void setWins(Set<Wins> win) {
+		this.wins = win;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -101,14 +114,6 @@ public class User {
 
 	public void setPoints(double points) {
 		this.points = points;
-	}
-
-	public Wins getWins() {
-		return wins;
-	}
-
-	public void setWins(Wins wins) {
-		this.wins = wins;
 	}
 	
 }

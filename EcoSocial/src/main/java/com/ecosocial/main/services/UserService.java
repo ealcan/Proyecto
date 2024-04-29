@@ -21,13 +21,15 @@ public class UserService {
     private RewardsRepository rewardsRepository;
 
     public void assignWin(User user, Wins win) {
-        user.setPoints(user.getPoints() - win.getRewardsPoints());
-        user.setWins(win);
+    	user.setPoints(user.getPoints() + win.getRewardsPoints());
+        
+        // TODO: user.setRewards(new ArrayList<Rewards>()); si la lista es NULL
+        user.getWins().add(win);
         userRepository.save(user);
     }
 
     public void assignReward(User user, Rewards reward) {
-        user.setPoints(user.getPoints() + reward.getPricePoints());
+        user.setPoints(user.getPoints() - reward.getPricePoints());
          
         // TODO: user.setRewards(new ArrayList<Rewards>()); si la lista es NULL
         user.getRewards().add(reward);
