@@ -1,11 +1,16 @@
 package com.ecosocial.main.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,16 +18,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.repository.ProfileRepository;
 
+
 @RestController
 @RequestMapping("/profiles")
 public class ProfileController {
-	 @Autowired
+	 	@Autowired
 	    private ProfileRepository profileRepository;
+	 
+	 	
+	    private static final String UPLOAD_DIR = "uploads/";
+
 
 	    // Obtener todos los perfiles
 	    @GetMapping
@@ -73,4 +86,5 @@ public class ProfileController {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
 	    }
+
 }

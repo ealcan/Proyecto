@@ -1,6 +1,9 @@
 package com.ecosocial.main.services;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +56,36 @@ public class UserService {
         
         userRepository.save(user);
         rewardsRepository.save(reward);
+    }
+    
+    public List<Wins> getUserWins(int userId) {
+        // Obtener el usuario por su ID
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // Obtener las wins asociadas al usuario y convertirlas a una lista
+            Set<Wins> winsSet = user.getWins();
+            List<Wins> winsList = new ArrayList<>(winsSet);
+            return winsList;
+        } else {
+            // Manejo de error si el usuario no se encuentra
+            throw new RuntimeException("Usuario no encontrado");
+        }
+    }
+    
+    public List<Rewards> getUserRewards(int userId) {
+        // Obtener el usuario por su ID
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // Obtener las wins asociadas al usuario y convertirlas a una lista
+            Set<Rewards> RewardSet = user.getRewards();
+            List<Rewards> rewardsList = new ArrayList<>(RewardSet);
+            return rewardsList;
+        } else {
+            // Manejo de error si el usuario no se encuentra
+            throw new RuntimeException("Usuario no encontrado");
+        }
     }
     
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSocial</title>
+</head>
+<body>
+    <ul th:each="win : ${userWins}">
+     	<li th:text="${win.name}"></li>
+        <li th:text="${win.description}"></li>
+        <li th:text="${win.rewardsPoints}"></li>
+    </ul>
+    
+</body>
+</html>

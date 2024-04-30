@@ -26,6 +26,7 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
+			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -38,6 +39,7 @@ public class WinService {
 		WinsDto winsDto = new WinsDto();
 		winsDto.setName(win.getName());
 		winsDto.setDescription(win.getDescription());
+		winsDto.setVerified(win.isVerified());
 		winsDto.setRewardsPoints(win.getRewardsPoints());
         return winsDto;
     }
@@ -50,6 +52,7 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
+			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -65,6 +68,7 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
+			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -72,7 +76,7 @@ public class WinService {
 	}
 	
 	//Encuentra los logros por su ID y por su username
-	public List<WinsDto> getRewardsByUser(Integer idUser, String username) {
+	public List<WinsDto> getWinsByUser(Integer idUser, String username) {
 		List<Wins> data = new ArrayList<Wins>();
 		if (idUser != null) {
 			data = winsRepository.findByUsersId(idUser);			
@@ -84,6 +88,7 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
+			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -91,7 +96,7 @@ public class WinService {
 	}
 	
 	//Comprueba si el logro existe
-	public boolean existsReward(Wins win) {
+	public boolean existsWins(Wins win) {
 		if (winsRepository.existsByName(win.getName())) {
 			return true;
 		}
@@ -101,7 +106,14 @@ public class WinService {
 	}
 	
 	//Crea un nuevo logro
-	public Wins saveRewad(Wins win) {
+	public Wins saveWin(Wins win) {
 		return winsRepository.save(win);
 	}
+	
+    public Wins createWin(Wins win) {
+        if (win.getName() == null) {
+        
+    }
+        return winsRepository.save(win);
+    }
 }

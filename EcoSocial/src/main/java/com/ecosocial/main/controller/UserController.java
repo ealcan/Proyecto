@@ -3,20 +3,27 @@ package com.ecosocial.main.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ecosocial.main.controller.dto.UserRewardsDto;
+import com.ecosocial.main.controller.dto.UserWinsDto;
 import com.ecosocial.main.entities.*;
 import com.ecosocial.main.repository.UserRepository;
 import com.ecosocial.main.repository.WinsRepository;
 import com.ecosocial.main.repository.RewardsRepository;
 import com.ecosocial.main.services.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+	
+	
 
     @Autowired
     private UserRepository userRepository;
@@ -86,7 +93,6 @@ public class UserController {
         }
     }
     
-    //Test Area
     
     @PostMapping("/{userId}/assign-win/{winId}")
     public ResponseEntity<?> assignWinToUser(@PathVariable Integer userId, @PathVariable Integer winId) {
@@ -114,5 +120,26 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     
+    //Test Area
+    
+    @GetMapping("/{userId}/wins")
+    public ResponseEntity<List<Wins>> getUserWins(@PathVariable int userId) {
+        // Obtener las wins del usuario especificado por userId
+        List<Wins> userWins = userService.getUserWins(userId);
+
+        // Devolver la lista de wins en formato JSON
+        return new ResponseEntity<>(userWins, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{userId}/rewards")
+    public ResponseEntity<List<Rewards>> getUserRewards(@PathVariable int userId) {
+        // Obtener las wins del usuario especificado por userId
+        List<Rewards> userRewards = userService.getUserRewards(userId);
+
+        // Devolver la lista de wins en formato JSON
+        return new ResponseEntity<>(userRewards, HttpStatus.OK);
+    }
+
 }
+    
 
