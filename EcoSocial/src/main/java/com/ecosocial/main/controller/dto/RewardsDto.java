@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 public class RewardsDto implements Serializable {
 
 	private static final long serialVersionUID = -1750698987774687782L;

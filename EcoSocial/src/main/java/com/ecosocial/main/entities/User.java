@@ -1,10 +1,11 @@
 package com.ecosocial.main.entities;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,8 +17,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
-
+@Data
 @Entity
 @Table(name = "user")
 public class User {
@@ -49,12 +51,17 @@ public class User {
     )
     private Set<Rewards> rewards = new HashSet<>();
     
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private Set<Friendship> friendships = new HashSet<>();
+    
     // Getters y setters
 
 	public int getId() {
 		return id;
 	}
 
+	
 	
 	public Set<Rewards> getRewards() {
 		return rewards;
@@ -110,6 +117,7 @@ public class User {
 	public void setWins(Wins wins) {
 		this.wins = wins;
 	}
+
 	
 }
 
