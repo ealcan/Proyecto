@@ -1,6 +1,7 @@
 package com.ecosocial.main.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,15 @@ public class FriendshipController {
     	return friendshipService.findFriendshipsByUserId(userId);
     }
     
-    /*@GetMapping("/{id1}/{id2}")
-    public boolean findMutualFriends(@PathVariable("id1") Integer userId, @PathVariable("id2") Integer userId2){
-    	return friendshipService.areFriends(userId, userId2);
-    }*/
-    
     @PostMapping("/{id1}/{id2}")
-    public ResponseEntity<String> addFriendship(@PathVariable("id1") Integer userId1, @PathVariable("id2") Integer userId2) {
-        
-        friendshipService.addFriendship(userId1, userId2);
-        return ResponseEntity.ok("Friendship added successfully");
-       
+    public ResponseEntity<String> addFriend(@PathVariable("id1") Integer userId, @PathVariable("id2") Integer friendId) {
+        if (friendshipService.areFriends(userId, friendId)) {
+        	return new ResponseEntity<>("Ya son amigos",HttpStatus.NOT_FOUND);
+        }
+        else {
+	    	friendshipService.addFriendship(userId, friendId);
+	        return ResponseEntity.ok("Amigo añadido correctamente");
+        }
     }
+    
 }

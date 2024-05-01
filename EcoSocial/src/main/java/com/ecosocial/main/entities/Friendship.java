@@ -24,13 +24,9 @@ public class Friendship {
 	private Integer Id;
 	
 	@JsonIgnore
-	@ManyToMany
-    @JoinTable(
-        name = "user_friend",
-        joinColumns = @JoinColumn(name = "friendship_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @ManyToMany(mappedBy = "friends")
     private Set<User> users = new HashSet<>();
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id_1")

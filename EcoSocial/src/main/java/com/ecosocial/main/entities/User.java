@@ -52,9 +52,13 @@ public class User {
     private Set<Rewards> rewards = new HashSet<>();
     
     @JsonIgnore
-    @ManyToMany(mappedBy = "users")
-    private Set<Friendship> friendships = new HashSet<>();
-    
+    @ManyToMany
+    @JoinTable(
+        name = "user_friends",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private Set<Friendship> friends = new HashSet<>();    
     // Getters y setters
 
 	public int getId() {

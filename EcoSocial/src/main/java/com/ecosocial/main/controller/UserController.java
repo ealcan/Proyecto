@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecosocial.main.controller.dto.UserDto;
-import com.ecosocial.main.entities.Friendship;
 import com.ecosocial.main.entities.Rewards;
 import com.ecosocial.main.entities.User;
 import com.ecosocial.main.entities.Wins;
