@@ -16,7 +16,7 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Integer>
 	
 	Optional<Friendship> findById(Integer id);
 	
-	@Query("SELECT f.user2 FROM Friendship f WHERE f.user1.id = :userId1")
+	@Query("SELECT f.user2 FROM Friendship f WHERE f.user1.id = :userId1 ")
     List<User> findFriendUsersByUserId1(@Param("userId1") Integer userId1);
 
 	@Query("SELECT f.user2 FROM Friendship f WHERE (f.user1.id = :userId1 AND f.user2.id = :userId2) OR (f.user1.id = :userId2 AND f.user2.id = :userId1)")

@@ -36,9 +36,13 @@ public class FriendshipService {
             .orElseThrow(() -> new RuntimeException("Amigo no encontrado: " + friendId));
 
         	Friendship userFriend = new Friendship();
+        	Friendship userFriend2 = new Friendship();
             userFriend.setUser1(user);
             userFriend.setUser2(friend);
-
+            userFriend2.setUser1(friend);
+            userFriend2.setUser2(user);
+            
+            friendshipRepository.save(userFriend2);
             friendshipRepository.save(userFriend);
         
     }

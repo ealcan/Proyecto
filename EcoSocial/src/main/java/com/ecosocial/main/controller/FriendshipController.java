@@ -31,12 +31,17 @@ public class FriendshipController {
     
     @PostMapping("/{id1}/{id2}")
     public ResponseEntity<String> addFriend(@PathVariable("id1") Integer userId, @PathVariable("id2") Integer friendId) {
-        if (friendshipService.areFriends(userId, friendId)) {
-        	return new ResponseEntity<>("Ya son amigos",HttpStatus.NOT_FOUND);
+        if(userId != friendId) {
+        	if (friendshipService.areFriends(userId, friendId)) {
+            	return new ResponseEntity<>("Ya son amigos",HttpStatus.NOT_FOUND);
+            }
+            else {
+    	    	friendshipService.addFriendship(userId, friendId);
+    	        return ResponseEntity.ok("Amigo añadido correctamente");
+            }
         }
         else {
-	    	friendshipService.addFriendship(userId, friendId);
-	        return ResponseEntity.ok("Amigo añadido correctamente");
+        	return new ResponseEntity<>("No puedes ser amigo de ti mismo",HttpStatus.NOT_FOUND);
         }
     }
     
