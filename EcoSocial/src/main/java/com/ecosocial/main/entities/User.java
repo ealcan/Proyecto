@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -59,12 +61,16 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private Set<Friendship> friends = new HashSet<>();    
+    
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Profile profile;
+    
     // Getters y setters
 
 	public int getId() {
 		return id;
 	}
-
 	
 	
 	public Set<Rewards> getRewards() {

@@ -27,7 +27,6 @@ public class Friendship {
     @ManyToMany(mappedBy = "friends")
     private Set<User> users = new HashSet<>();
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "user_id_1")
 	private User user1;

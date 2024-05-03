@@ -15,24 +15,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecosocial.main.controller.dto.ProfileDto;
 import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.repository.ProfileRepository;
+import com.ecosocial.main.services.ProfileService;
 
 @RestController
 @RequestMapping("/profiles")
 public class ProfileController {
 	 @Autowired
 	    private ProfileRepository profileRepository;
+	 @Autowired
+	 private ProfileService profileService;
 
 	    // Obtener todos los perfiles
 	    @GetMapping
-	    public ResponseEntity<List<Profile>> getAllProfiles() {
-	        List<Profile> profiles = profileRepository.findAll();
+	    public ResponseEntity<List<ProfileDto>> getAllProfiles() {
+	        List<ProfileDto> profiles = profileService.getAllProfiles();
+	        return new ResponseEntity<>(profiles, HttpStatus.OK);
+	    }
+	    
+	    // Obtener el ranking de los amigos según el ID de un usuario
+	    @GetMapping("ranking-friends/{id}")
+	    public ResponseEntity<List<ProfileDto>> getRankingFriends(@PathVariable("id") Integer profileId) {
+	        List<ProfileDto> profiles = profileService.getRanking(profileId);
 	        return new ResponseEntity<>(profiles, HttpStatus.OK);
 	    }
 	    
 	    // Obtener un perfil por su ID
-	    @GetMapping("/{id}")
+	    /*@GetMapping("/{id}")
 	    public ResponseEntity<Profile> getProfileById(@PathVariable("id") int id) {
 	        Optional<Profile> profileOptional = profileRepository.findById(id);
 	        if (profileOptional.isPresent()) {
@@ -40,6 +51,19 @@ public class ProfileController {
 	        } else {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
+	    }*/
+	    
+	    //Obtener un perfil mediante su ID
+	    @GetMapping("/{id}")
+	    public ProfileDto getProfile (@PathVariable("id") Integer profileId) {
+	    	return profileService.getProfileById(profileId);
+	    }
+	    
+	    //Obtener los perfiles de los amigos de un perfil mediante su ID
+	    @GetMapping("/friends/{id}")
+	    public ResponseEntity<List<ProfileDto>> getAllFriendsByProfile(@PathVariable("id") Integer profileId) {
+	        List<ProfileDto> profiles = profileService.getFriendshipByUser(profileId);
+	        return new ResponseEntity<>(profiles, HttpStatus.OK);
 	    }
 
 	    // Crear un nuevo perfil

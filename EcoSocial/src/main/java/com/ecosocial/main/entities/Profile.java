@@ -9,7 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name="profile")
 public class Profile {
@@ -18,7 +20,7 @@ public class Profile {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "id") // La clave primaria que hace referencia al ID de User
+    @JoinColumn(name = "profile") // La clave primaria que hace referencia al ID de User
     private User user;
 
     @Lob // Para columnas BLOB

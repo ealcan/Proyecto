@@ -41,8 +41,6 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-    @Autowired
-    private FriendshipService friendshipService;
 
     // Obtener todos los usuarios
     @GetMapping
