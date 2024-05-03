@@ -48,13 +48,14 @@ public class RewardsController {
 		return new ResponseEntity<>(rewards, HttpStatus.OK);
 	}
 
-	//Obtener logros por ID del usuario o por e username del usuario
+	//Obtener logros por ID del usuario o por e username del usuario (en el url sería localhost:8080/user?id= o /username=)
 	@GetMapping("/user")
 	public ResponseEntity<List<RewardsDto>> getRewardsByUser(@RequestParam(value ="id", required = false) Integer id, @RequestParam(value = "username", required = false) String username){
 		List<RewardsDto> rewards = rewardsService.getRewardsByUser(id, username);
 		return new ResponseEntity<>(rewards, HttpStatus.OK);
 	}
 	
+	//No funciona, lo llena todo de NULL
 	@PostMapping("/")
 	//Verificar si ya existe el logro en la base de datos
 	public ResponseEntity<?> createReward(@RequestBody Rewards reward){

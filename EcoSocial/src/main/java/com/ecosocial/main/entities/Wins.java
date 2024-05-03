@@ -26,8 +26,6 @@ public class Wins {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "verified")
-    private boolean verified;
 
     @Column(name = "rewards_points")
     private double rewardsPoints;
@@ -58,14 +56,6 @@ public class Wins {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public boolean isVerified() {
-		return verified;
-	}
-
-	public void setVerified(boolean verified) {
-		this.verified = verified;
 	}
 
 	public double getRewardsPoints() {

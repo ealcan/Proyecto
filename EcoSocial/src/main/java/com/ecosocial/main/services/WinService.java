@@ -2,6 +2,7 @@ package com.ecosocial.main.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
-			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -39,7 +39,6 @@ public class WinService {
 		WinsDto winsDto = new WinsDto();
 		winsDto.setName(win.getName());
 		winsDto.setDescription(win.getDescription());
-		winsDto.setVerified(win.isVerified());
 		winsDto.setRewardsPoints(win.getRewardsPoints());
         return winsDto;
     }
@@ -52,7 +51,6 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
-			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -68,7 +66,6 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
-			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -88,7 +85,6 @@ public class WinService {
 			WinsDto winsDto = new WinsDto();
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
-			winsDto.setVerified(r.isVerified());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			result.add(winsDto);
 		}
@@ -116,4 +112,5 @@ public class WinService {
     }
         return winsRepository.save(win);
     }
+    
 }

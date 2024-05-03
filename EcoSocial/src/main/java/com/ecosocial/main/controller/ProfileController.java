@@ -1,16 +1,11 @@
 package com.ecosocial.main.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,34 +13,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.ecosocial.main.controller.dto.ProfileDto;
 import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.repository.ProfileRepository;
-
+import com.ecosocial.main.services.ProfileService;
 
 @RestController
 @RequestMapping("/profiles")
 public class ProfileController {
-	 	@Autowired
+	 @Autowired
 	    private ProfileRepository profileRepository;
-	 
-	 	
-	    private static final String UPLOAD_DIR = "uploads/";
-
+	 @Autowired
+	 private ProfileService profileService;
 
 	    // Obtener todos los perfiles
 	    @GetMapping
-	    public ResponseEntity<List<Profile>> getAllProfiles() {
-	        List<Profile> profiles = profileRepository.findAll();
+	    public ResponseEntity<List<ProfileDto>> getAllProfiles() {
+	        List<ProfileDto> profiles = profileService.getAllProfiles();
+	        return new ResponseEntity<>(profiles, HttpStatus.OK);
+	    }
+	    
+	    // Obtener el ranking de los amigos según el ID de un usuario
+	    @GetMapping("ranking-friends/{id}")
+	    public ResponseEntity<List<ProfileDto>> getRankingFriends(@PathVariable("id") Integer profileId) {
+	        List<ProfileDto> profiles = profileService.getRanking(profileId);
 	        return new ResponseEntity<>(profiles, HttpStatus.OK);
 	    }
 	    
 	    // Obtener un perfil por su ID
-	    @GetMapping("/{id}")
+	    /*@GetMapping("/{id}")
 	    public ResponseEntity<Profile> getProfileById(@PathVariable("id") int id) {
 	        Optional<Profile> profileOptional = profileRepository.findById(id);
 	        if (profileOptional.isPresent()) {
@@ -53,6 +51,19 @@ public class ProfileController {
 	        } else {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
+	    }*/
+	    
+	    //Obtener un perfil mediante su ID
+	    @GetMapping("/{id}")
+	    public ProfileDto getProfile (@PathVariable("id") Integer profileId) {
+	    	return profileService.getProfileById(profileId);
+	    }
+	    
+	    //Obtener los perfiles de los amigos de un perfil mediante su ID
+	    @GetMapping("/friends/{id}")
+	    public ResponseEntity<List<ProfileDto>> getAllFriendsByProfile(@PathVariable("id") Integer profileId) {
+	        List<ProfileDto> profiles = profileService.getFriendshipByUser(profileId);
+	        return new ResponseEntity<>(profiles, HttpStatus.OK);
 	    }
 
 	    // Crear un nuevo perfil
@@ -86,5 +97,4 @@ public class ProfileController {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
 	    }
-
 }

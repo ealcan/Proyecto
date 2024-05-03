@@ -1,10 +1,11 @@
 package com.ecosocial.main.entities;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,9 +16,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+import com.ecosocial.main.services.*;
 
+@Data
 @Entity
 @Table(name = "user")
 public class User {
@@ -53,12 +58,38 @@ public class User {
     )
     private Set<Rewards> rewards = new HashSet<>();
     
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+        name = "user_friends",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private Set<Friendship> friends = new HashSet<>();    
+    
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Profile profile;
     // Getters y setters
+    
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+
 
 	public int getId() {
 		return id;
 	}
 
+	
 	
 	public Set<Rewards> getRewards() {
 		return rewards;
@@ -115,6 +146,19 @@ public class User {
 	public void setPoints(double points) {
 		this.points = points;
 	}
+	
+    public Set<Wins> getVerifiedWins() {
+        UserWinsService userWinService = new UserWinsService();
+        return userWinService.getVerifiedWinsForUser(this);
+    }
+
+    public Set<Wins> getUnverifiedWins() {
+        UserWinsService userWinService = new UserWinsService();
+        return userWinService.getUnVerifiedWinsForUser(this);
+    }
+
+
+
 	
 }
 

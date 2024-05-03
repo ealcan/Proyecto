@@ -27,6 +27,8 @@ public class UserWins {
     @JoinColumn(name = "wins_id")
     private Wins win;
     
+    private Boolean verified;
+    
 
     // Getters and setters
     
@@ -53,6 +55,14 @@ public class UserWins {
 
 	public void setWin(Wins win) {
 		this.win = win;
+	}
+
+	public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
 	}
 
     
