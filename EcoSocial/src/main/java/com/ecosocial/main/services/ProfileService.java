@@ -2,6 +2,7 @@ package com.ecosocial.main.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.entities.User;
 import com.ecosocial.main.repository.FriendshipRepository;
 import com.ecosocial.main.repository.ProfileRepository;
+import com.ecosocial.main.repository.UserRepository;
 
 @Service
 public class ProfileService {
@@ -20,6 +22,9 @@ public class ProfileService {
 	
 	@Autowired
 	FriendshipRepository friendshipRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	public List<ProfileDto> getFriendshipByUser(Integer userId){
 		List<User> friendship = friendshipRepository.findFriendUsersByUserId1(userId);

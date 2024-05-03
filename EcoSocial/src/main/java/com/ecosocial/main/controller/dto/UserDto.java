@@ -24,6 +24,15 @@ public class UserDto {
 	private Set<Rewards> rewards;
 	private Set<Wins> wins;
 	
+    public double getRankingPoints() {
+    	double totalpoints = 0;
+    	
+        for (Rewards reward : rewards) {
+
+        	totalpoints += reward.getPricePoints();
+        }
+        return points + totalpoints;
+    }
 	//Getters y Setters
 	
 	@Autowired

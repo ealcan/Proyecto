@@ -17,6 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	List<User> findUserById(Integer id);
 	Optional<User> findByUsername(String username);
 	
+	
 //	@Query("SELECT DISTINCT u FROM User u " +
 //	           "JOIN FETCH u.userWins uw " +
 //	           "JOIN FETCH uw.win w " +

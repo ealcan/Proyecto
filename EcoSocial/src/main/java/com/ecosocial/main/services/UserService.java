@@ -41,6 +41,7 @@ public class UserService {
 			userDto.setPoints(u.getPoints());
 			userDto.setRewards(u.getRewards());
 			userDto.setWins(u.getWins());
+			userDto.getRankingPoints();
 			result.add(userDto);
 		}
 		return result;
@@ -69,6 +70,7 @@ public class UserService {
 			userDto.setPoints(u.getPoints());
 			userDto.setRewards(u.getRewards());
 			userDto.setWins(u.getWins());
+			userDto.getRankingPoints();
 			result.add(userDto);
 		}
 		return result;
