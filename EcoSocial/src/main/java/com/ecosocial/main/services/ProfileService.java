@@ -42,8 +42,35 @@ public class ProfileService {
 		return result;
 	}
 	
+	public List<ProfileDto> getFriendshipByUser2(Integer userId){
+		List<User> friendship = friendshipRepository.findFriendUsersByUserId1(userId);
+		List<ProfileDto> result = new ArrayList<ProfileDto>();
+		for (User u : friendship) {
+			ProfileDto profileDto = new ProfileDto();
+			profileDto.setName(u.getProfile().getName());
+			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setUsername(u.getUsername());
+			profileDto.setPoints(u.getPoints());
+			profileDto.setRewards(u.getRewards());
+			profileDto.setWins(u.getWins());
+			result.add(profileDto);
+		}
+		List<User> user = userRepository.findUserById(userId);
+		for (User u : user) {
+			ProfileDto profileDto = new ProfileDto();
+			profileDto.setName(u.getProfile().getName());
+			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setUsername(u.getUsername());
+			profileDto.setPoints(u.getPoints());
+			profileDto.setRewards(u.getRewards());
+			profileDto.setWins(u.getWins());
+			result.add(profileDto);
+		}
+		return result;
+	}
+	
 	public List<ProfileDto> getRanking (Integer userid){
-		List<ProfileDto> ranking = getFriendshipByUser(userid);
+		List<ProfileDto> ranking = getFriendshipByUser2(userid);
 		ranking.sort((u1, u2) -> Double.compare(u2.getPoints(), u1.getPoints()));
 		
 		return ranking;
