@@ -1,18 +1,29 @@
 package com.ecosocial.main.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.ecosocial.main.entities.*;
+import com.ecosocial.main.controller.dto.UserDto;
+import com.ecosocial.main.entities.Rewards;
+import com.ecosocial.main.entities.User;
+import com.ecosocial.main.entities.Wins;
+import com.ecosocial.main.repository.RewardsRepository;
 import com.ecosocial.main.repository.UserRepository;
 import com.ecosocial.main.repository.WinsRepository;
-import com.ecosocial.main.repository.RewardsRepository;
-import com.ecosocial.main.services.*;
-
-import java.util.List;
-import java.util.Optional;
+import com.ecosocial.main.services.FriendshipService;
+import com.ecosocial.main.services.UserService;
 
 @RestController
 @RequestMapping("/users")
@@ -29,23 +40,19 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    
 
     // Obtener todos los usuarios
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userRepository.findAll();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     // Obtener un usuario por su ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public List<UserDto> getUser(@PathVariable("id") Integer userId) {
+    	return userService.getUserById(userId);
     }
 
     // Crear un nuevo usuario
@@ -113,5 +120,6 @@ public class UserController {
         userService.assignReward(user, reward);
         return ResponseEntity.ok().build();
     }
+    
 }
 

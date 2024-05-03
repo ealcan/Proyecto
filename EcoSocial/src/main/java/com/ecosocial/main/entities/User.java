@@ -1,17 +1,27 @@
 package com.ecosocial.main.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-
+@Data
 @Entity
 @Table(name = "user")
 public class User {
@@ -34,16 +44,44 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "id_wins")
     private Wins wins;
-
-    @ManyToOne
-    @JoinColumn(name = "id_reward")
-    private Rewards reward;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "user_reward",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "reward_id")
+    )
+    private Set<Rewards> rewards = new HashSet<>();
+    
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+        name = "user_friends",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private Set<Friendship> friends = new HashSet<>();    
+    
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Profile profile;
     
     // Getters y setters
 
 	public int getId() {
 		return id;
 	}
+	
+	
+	public Set<Rewards> getRewards() {
+		return rewards;
+	}
+
+
+	public void setRewards(Set<Rewards> rewards) {
+		this.rewards = rewards;
+	}
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -90,15 +128,6 @@ public class User {
 		this.wins = wins;
 	}
 
-	public Rewards getReward() {
-		return reward;
-	}
-
-	public void setReward(Rewards reward) {
-		this.reward = reward;
-	}
-
-
-    
+	
 }
 
