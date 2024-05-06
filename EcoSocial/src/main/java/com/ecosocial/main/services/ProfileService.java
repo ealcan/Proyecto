@@ -37,6 +37,7 @@ public class ProfileService {
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
 			profileDto.setWins(u.getWins());
+			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
 		return result;
@@ -53,6 +54,7 @@ public class ProfileService {
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
 			profileDto.setWins(u.getWins());
+			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
 		List<User> user = userRepository.findUserById(userId);
@@ -71,7 +73,7 @@ public class ProfileService {
 	
 	public List<ProfileDto> getRanking (Integer userid){
 		List<ProfileDto> ranking = getFriendshipByUser2(userid);
-		ranking.sort((u1, u2) -> Double.compare(u2.getPoints(), u1.getPoints()));
+		ranking.sort((u1, u2) -> Double.compare(u2.getRankingPoints(), u1.getRankingPoints()));
 		
 		return ranking;
 	}
@@ -87,6 +89,7 @@ public class ProfileService {
 			profileDto.setLastName(r.getLastname());
 			profileDto.setRewards(r.getUser().getRewards());
 			profileDto.setWins(r.getUser().getWins());
+			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
 		return result;
@@ -101,6 +104,7 @@ public class ProfileService {
 		profileDto.setLastName(profile.getLastname());
 		profileDto.setRewards(profile.getUser().getRewards());
 		profileDto.setWins(profile.getUser().getWins());
+		profileDto.getRankingPoints();
 		return profileDto;
 	}
 }

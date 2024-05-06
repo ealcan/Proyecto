@@ -15,6 +15,15 @@ public class ProfileDto {
 	private double points;
 	private Set<Wins> wins;
 	private Set<Rewards> rewards;
+    public double getRankingPoints() {
+    	double totalpoints = 0;
+    	
+        for (Rewards reward : rewards) {
+
+        	totalpoints += reward.getPricePoints();
+        }
+        return points + totalpoints;
+    }
 
 	
 	
