@@ -57,17 +57,12 @@
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-core</artifactId>
-		    <version>6.2.4</version>
 		</dependency>
-<<<<<<< Updated upstream
-=======
 		
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
->>>>>>> Stashed changes
 	</dependencies>
 
 	<build>
