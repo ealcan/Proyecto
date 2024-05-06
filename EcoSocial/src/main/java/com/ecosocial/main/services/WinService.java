@@ -28,6 +28,7 @@ public class WinService {
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
+			winsDto.getDifficulty();
 			result.add(winsDto);
 		}
 		return result;
@@ -40,6 +41,7 @@ public class WinService {
 		winsDto.setName(win.getName());
 		winsDto.setDescription(win.getDescription());
 		winsDto.setRewardsPoints(win.getRewardsPoints());
+		winsDto.getDifficulty();
         return winsDto;
     }
 	
@@ -52,6 +54,7 @@ public class WinService {
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
+			winsDto.getDifficulty();
 			result.add(winsDto);
 		}
 		return data;
@@ -67,6 +70,7 @@ public class WinService {
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
+			winsDto.getDifficulty();
 			result.add(winsDto);
 		}
 		return result;
@@ -86,6 +90,7 @@ public class WinService {
 			winsDto.setName(r.getName());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
+			winsDto.getDifficulty();
 			result.add(winsDto);
 		}
 		return result;

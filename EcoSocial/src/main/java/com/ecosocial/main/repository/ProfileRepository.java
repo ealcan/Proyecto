@@ -11,4 +11,5 @@ import com.ecosocial.main.entities.User;
 public interface ProfileRepository extends JpaRepository<Profile, Integer>{
 	Profile findByUser(User user);
 	Optional<Profile> findById(int id);
+	Profile findProfileById(int id);
 }

@@ -2,6 +2,8 @@ package com.ecosocial.main.controller.dto;
 
 import java.io.Serializable;
 
+import com.ecosocial.main.entities.Rewards;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,26 @@ public class WinsDto implements Serializable {
 	private Boolean verified;
 	
 	private Double rewardsPoints;
+	
+	private String difficulty;
+	
+    public String getDifficulty() {
+    	
+        if (this.rewardsPoints <= 25) {
+        	this.setDifficulty("Easy");
+        }
+        else if (this.rewardsPoints >= 25 && this.rewardsPoints <= 70){
+        	this.setDifficulty("Medium");
+        }
+        else {
+        	this.setDifficulty("Hard");
+        }
+        return difficulty;
+    }
+    
+    public void setDifficulty(String difficulty) {
+    	this.difficulty = difficulty;
+    }
 
 	public String getName() {
 		return name;

@@ -1,7 +1,10 @@
 package com.ecosocial.main.entities;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -33,6 +37,10 @@ public class Profile {
 
     @Column(name = "lastname", length = 100)
     private String lastname;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    private List<Post> posts;
 
 	public int getId() {
 		return id;
@@ -73,7 +81,16 @@ public class Profile {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
     
+	
     //Getters y Setters
     
     
