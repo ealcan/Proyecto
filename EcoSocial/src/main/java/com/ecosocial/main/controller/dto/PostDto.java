@@ -9,7 +9,7 @@ import com.ecosocial.main.entities.Profile;
 public class PostDto {
 	private String title;
 	private String content;
-	private int likes;
+	private int numLikes;
 	private LocalDateTime publishedAt;
 	
 	
@@ -33,19 +33,15 @@ public class PostDto {
 	public void setPublishedAt(LocalDateTime publishedAt) {
 		this.publishedAt = publishedAt;
 	}
-	public int getLikes() {
-		return likes;
+	public int getNumLikes() {
+		return numLikes;
 	}
-	public int setLikes(Set<Profile> profiles) {
-		int like_list = 0;
-		
-		for (Profile profile: profiles) {
-			like_list += 1;
-			
-		}
-		return like_list;
+	public void setNumLikes(int numLikes) {
+		this.numLikes = numLikes;
 	}
-	
+    public int calculateNumLikes(Set<Profile> profiles) {
+        return profiles.size();
+    }
 	
 	
 	

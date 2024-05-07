@@ -34,7 +34,7 @@ public class PostService {
     		PostDto postDto = new PostDto();
     		postDto.setTitle(p.getTitle());
     		postDto.setContent(p.getContent());
-    		postDto.setLikes(p.getLikes());
+    		postDto.setNumLikes(postDto.calculateNumLikes(p.getLikes()));
     		postDto.setPublishedAt(p.getPublishedAt());
     		result.add(postDto);
     	}
@@ -54,7 +54,7 @@ public class PostService {
         	PostDto postDto = new PostDto();
     		postDto.setTitle(p.getTitle());
     		postDto.setContent(p.getContent());
-    		postDto.setLikes(p.getLikes());
+    		postDto.setNumLikes(postDto.calculateNumLikes(p.getLikes()));
     		postDto.setPublishedAt(p.getPublishedAt());
     		result.add(postDto);
     	}
