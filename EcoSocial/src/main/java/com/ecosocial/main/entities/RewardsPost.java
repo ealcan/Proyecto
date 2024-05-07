@@ -1,5 +1,7 @@
 package com.ecosocial.main.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -9,13 +11,21 @@ import jakarta.persistence.ManyToOne;
 @DiscriminatorValue("rewards")
 public class RewardsPost extends Post {
 	
+	 @JsonIgnore
      @ManyToOne
 	 @JoinColumn(name = "reward_id")
 	 private Rewards reward;
-	
-	 private String rewardName;
-
-	 private String rewardDescription;
+	 
+	public RewardsPost() {
+			// Puedes inicializar valores predeterminados aquí si es necesario
+	}
+	 
+	 // Constructor
+	 public RewardsPost(Rewards reward) {
+		 this.reward = reward;
+		 super.setTitle(reward.getName());
+		 super.setContent(reward.getDescription());
+	 }
 
 	 // Getters y setters para la relación con Reward
 	 public Rewards getReward() {
@@ -25,24 +35,5 @@ public class RewardsPost extends Post {
 	 public void setReward(Rewards reward) {
 	     this.reward = reward;
 	 }
-	 
-	 
-	 public String getRewardName() {
-	     return rewardName; // Utiliza el título heredado de la clase base Post
-	 }
-
-	 public void setRewardName(Rewards reward) {
-	     super.setTitle(reward.getName()); // Establece el título heredado de la clase base Post
-	 }
-
-	 // Getter y setter para rewardDescription
-	 public String getRewardDescription() {
-	     return rewardDescription;
-	 }
-
-	 public void setRewardDescription(Rewards reward) {
-	        super.setContent(reward.getDescription());
-	 }
-
-    
+	
 }

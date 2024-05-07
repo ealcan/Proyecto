@@ -1,5 +1,7 @@
 package com.ecosocial.main.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -9,13 +11,22 @@ import jakarta.persistence.ManyToOne;
 @DiscriminatorValue("wins")
 public class WinsPost extends Post {
 	
+	 @JsonIgnore
      @ManyToOne
 	 @JoinColumn(name = "wins_id")
 	 private Wins win;
+     
+ 	public WinsPost() {
+		// Puedes inicializar valores predeterminados aquí si es necesario
+}
+ 
+ // Constructor
+ 	public WinsPost(Wins win) {
+ 		this.win = win;
+ 		super.setTitle(win.getName());
+ 		super.setContent(win.getDescription());
+ }
 	
-	 private String winName;
-
-	 private String winDescription;
 
 	 // Getters y setters para la relación con Reward
 	 public Wins getWin() {
@@ -26,23 +37,5 @@ public class WinsPost extends Post {
 	     this.win = win;
 	 }
 	 
-	 
-	 public String getWinName() {
-	     return winName; // Utiliza el título heredado de la clase base Post
-	 }
-
-	 public void setWinName(Wins win) {
-	     super.setTitle(win.getName()); // Establece el título heredado de la clase base Post
-	 }
-
-	 // Getter y setter para rewardDescription
-	 public String getWinDescription() {
-	     return winDescription;
-	 }
-
-	 public void setWinDescription(Wins win) {
-	        super.setContent(win.getDescription());
-	 }
-
     
 }

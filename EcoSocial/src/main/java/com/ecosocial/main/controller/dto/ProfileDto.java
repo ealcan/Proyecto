@@ -2,6 +2,7 @@ package com.ecosocial.main.controller.dto;
 
 import java.util.Set;
 
+import com.ecosocial.main.entities.Post;
 import com.ecosocial.main.entities.Rewards;
 import com.ecosocial.main.entities.Wins;
 
@@ -15,6 +16,8 @@ public class ProfileDto {
 	private double points;
 	private Set<Wins> wins;
 	private Set<Rewards> rewards;
+	private Set<Post> posts;
+	
     public double getRankingPoints() {
     	double totalpoints = 0;
     	
@@ -62,6 +65,15 @@ public class ProfileDto {
 	}
 	public void setRewards(Set<Rewards> rewards) {
 		this.rewards = rewards;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
 	}
 	
 	

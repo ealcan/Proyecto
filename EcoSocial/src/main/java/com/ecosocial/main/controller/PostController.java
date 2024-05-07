@@ -20,9 +20,11 @@ import com.ecosocial.main.controller.dto.PostDto;
 import com.ecosocial.main.entities.Post;
 import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.entities.User;
+import com.ecosocial.main.entities.Wins;
 import com.ecosocial.main.repository.PostRepository;
 import com.ecosocial.main.repository.ProfileRepository;
 import com.ecosocial.main.services.PostService;
+import com.ecosocial.main.services.ProfileService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
@@ -38,6 +40,9 @@ public class PostController {
     
     @Autowired
     private ProfileRepository profileRepository;
+    
+    @Autowired
+    private ProfileService profileService;
 
     // Endpoint para obtener todos los posts
     @GetMapping
@@ -84,5 +89,22 @@ public class PostController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    //Test area
+    
+    @PostMapping("/{postId}/like/{profileId}")
+    public String postLike(@PathVariable Integer postId, @PathVariable Integer profileId) {
+    	Post post = postRepository.findById(postId).orElse(null);
+    	Profile profile = profileRepository.findById(profileId).orElse(null);
+    	
+    	if(post == null || profile == null) {
+    		return "Usuario o publicación no encontrada";
+    	}
+
+    	else {
+    		postService.likePost(profile, post);
+    		return "Has dado like.";
+    	}
     }
 }

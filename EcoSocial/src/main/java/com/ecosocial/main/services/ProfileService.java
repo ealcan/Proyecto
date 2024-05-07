@@ -89,6 +89,7 @@ public class ProfileService {
 			profileDto.setLastName(r.getLastname());
 			profileDto.setRewards(r.getUser().getRewards());
 			profileDto.setWins(r.getUser().getWins());
+			profileDto.setPosts(r.getPosts());
 			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
@@ -104,7 +105,14 @@ public class ProfileService {
 		profileDto.setLastName(profile.getLastname());
 		profileDto.setRewards(profile.getUser().getRewards());
 		profileDto.setWins(profile.getUser().getWins());
+		profileDto.setPosts(profile.getPosts());
 		profileDto.getRankingPoints();
 		return profileDto;
+	}
+	
+	public Profile getProfileById2(Integer ProfileId) {
+		Profile profile = profileRepository.findById(ProfileId).orElse(null);
+		
+		return profile;
 	}
 }

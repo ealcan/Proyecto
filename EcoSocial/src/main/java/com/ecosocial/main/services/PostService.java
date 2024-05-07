@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ecosocial.main.controller.dto.PostDto;
 import com.ecosocial.main.controller.dto.UserDto;
 import com.ecosocial.main.entities.Post;
+import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.entities.User;
+import com.ecosocial.main.entities.Wins;
 import com.ecosocial.main.repository.PostRepository;
 
 import java.time.LocalDateTime;
@@ -32,7 +34,8 @@ public class PostService {
     		PostDto postDto = new PostDto();
     		postDto.setTitle(p.getTitle());
     		postDto.setContent(p.getContent());
-    		postDto.setPublishedAt(LocalDateTime.now());
+    		postDto.setLikes(p.getLikes());
+    		postDto.setPublishedAt(p.getPublishedAt());
     		result.add(postDto);
     	}
     	return result;
@@ -51,11 +54,21 @@ public class PostService {
         	PostDto postDto = new PostDto();
     		postDto.setTitle(p.getTitle());
     		postDto.setContent(p.getContent());
-    		postDto.setPublishedAt(LocalDateTime.now());
+    		postDto.setLikes(p.getLikes());
+    		postDto.setPublishedAt(p.getPublishedAt());
     		result.add(postDto);
     	}
     	return result;
         
+    }
+    
+    public Post getPostById2(Integer postId){
+        List<Post> posts = postRepository.findPostById(postId);
+        if (!posts.isEmpty()) {
+            return posts.get(0); // Devuelve el primer usuario de la lista
+        } else {
+            return null; // Si la lista está vacía, devuelve null
+        }
     }
     
 
@@ -71,5 +84,12 @@ public class PostService {
     // Método para eliminar un post
     public void deletePost(Integer id) {
         postRepository.deleteById(id);
+    }
+    
+    public void likePost(Profile profile, Post post) {
+        
+        // TODO: user.setRewards(new ArrayList<Rewards>()); si la lista es NULL
+        post.getLikes().add(profile);
+        postRepository.save(post);
     }
 }

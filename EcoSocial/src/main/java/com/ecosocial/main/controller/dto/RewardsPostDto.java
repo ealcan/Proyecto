@@ -1,40 +1,32 @@
 package com.ecosocial.main.controller.dto;
 
-import com.ecosocial.main.entities.Rewards;
 
 public class RewardsPostDto {
 	
-	 private Rewards reward;
 		
-	 private String rewardName;
+	 private String title;
 
-	 private String rewardDescription;
+	 private String content;
 	 
 	 //Getters y Setters
 
-	public Rewards getReward() {
-		return reward;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setReward(Rewards reward) {
-		this.reward = reward;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getRewardName() {
-		return rewardName;
+	public String getContent() {
+		return content;
 	}
 
-	public void setRewardName(String rewardName) {
-		this.rewardName = rewardName;
-	}
-
-	public String getRewardDescription() {
-		return rewardDescription;
-	}
-
-	public void setRewardDescription(String rewardDescription) {
-		this.rewardDescription = rewardDescription;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	 
+
+
 	 
 }
