@@ -85,15 +85,21 @@ public class UserController {
 
     // Crear un nuevo usuario
     @PostMapping("/")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public RedirectView createUser(@RequestBody User user) {
         // Verificar si el nombre de usuario ya existe en la base de datos
         if (userRepository.existsByUsername(user.getUsername())) {
-            return new ResponseEntity<>("El nombre de usuario ya está en uso.", HttpStatus.BAD_REQUEST);
+            RedirectView redirectView = new RedirectView();
+            redirectView.setUrl("login-error"); // URL de destino
+            return redirectView;
+            
         }
+        else {
 
-        // Si el nombre de usuario no existe, crear el usuario
-        User createdUser = userRepository.save(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+	        userRepository.save(user);
+	        RedirectView redirectView = new RedirectView();
+	        redirectView.setUrl("/profiles/"); // URL de destino
+	        return redirectView;
+        }
     }
 
     // Actualizar un usuario existente

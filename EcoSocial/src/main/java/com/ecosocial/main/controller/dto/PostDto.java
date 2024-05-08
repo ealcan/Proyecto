@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import com.ecosocial.main.entities.Profile;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PostDto {
 	private String title;
 	private String content;
 	private int numLikes;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime publishedAt;
 	
 	

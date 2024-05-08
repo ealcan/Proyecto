@@ -36,7 +36,6 @@ public class UserService {
 		for (User u : data) {
 			UserDto userDto = new UserDto();
 			userDto.setUsername(u.getUsername());
-			userDto.setPassword(u.getPassword());
 			userDto.setEmail(u.getEmail());
 			userDto.setPoints(u.getPoints());
 			userDto.setRewards(u.getRewards());
@@ -65,7 +64,6 @@ public class UserService {
 		for (User u: data) {
 			UserDto userDto = new UserDto();
 			userDto.setUsername(u.getUsername());
-			userDto.setPassword(u.getPassword());
 			userDto.setEmail(u.getEmail());
 			userDto.setPoints(u.getPoints());
 			userDto.setRewards(u.getRewards());
