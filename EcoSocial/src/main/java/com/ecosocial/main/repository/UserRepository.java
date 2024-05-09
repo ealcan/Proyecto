@@ -16,6 +16,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findById(Integer id);
 	List<User> findUserById(Integer id);
 	Optional<User> findByUsername(String username);
+	boolean existsByEmail(String email);
 	
 	
 //	@Query("SELECT DISTINCT u FROM User u " +

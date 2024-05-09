@@ -45,6 +45,12 @@ public class ProfileController {
 	        return new ResponseEntity<>(profiles, HttpStatus.OK);
 	    }
 	    
+	    @GetMapping("/global-ranking")
+	    public ResponseEntity<List<ProfileDto>> getGlobalRanking(){
+	    	List<ProfileDto> profiles = profileService.getGlobalRanking();
+	    	return new ResponseEntity<>(profiles, HttpStatus.OK);
+	    }
+	    
 	    // Obtener un perfil por su ID
 	    /*@GetMapping("/{id}")
 	    public ResponseEntity<Profile> getProfileById(@PathVariable("id") int id) {

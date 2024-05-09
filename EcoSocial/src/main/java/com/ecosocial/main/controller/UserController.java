@@ -93,6 +93,11 @@ public class UserController {
             return redirectView;
             
         }
+        else if(userRepository.existsByEmail(user.getEmail())){
+        	RedirectView redirectView = new RedirectView();
+            redirectView.setUrl("login-error"); // URL de destino
+            return redirectView;
+        }
         else {
 
 	        userRepository.save(user);

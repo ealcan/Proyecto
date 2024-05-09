@@ -78,6 +78,28 @@ public class ProfileService {
 		return ranking;
 	}
 	
+	public List<ProfileDto> getGlobalRanking(){
+		List<Profile> profiles = profileRepository.findAll();
+		List<ProfileDto> result = new ArrayList<ProfileDto>();
+		for (Profile r : profiles) {
+			ProfileDto profileDto = new ProfileDto();
+			profileDto.setUsername(r.getUser().getUsername());
+			profileDto.setPoints(r.getUser().getPoints());
+			profileDto.setName(r.getName());
+			profileDto.setLastName(r.getLastname());
+			profileDto.setRewards(r.getUser().getRewards());
+			profileDto.setWins(r.getUser().getWins());
+			profileDto.setPosts(r.getPosts());
+			profileDto.getRankingPoints();
+			result.add(profileDto);
+		}
+		result.sort((u1, u2) -> Double.compare(u2.getRankingPoints(), u1.getRankingPoints()));
+	    if (result.size() > 10) {
+	        result = result.subList(0, 10);
+	    }
+		return result;
+	}
+	
 	public List<ProfileDto> getAllProfiles(){
 		List<Profile> profiles = profileRepository.findAll();
 		List<ProfileDto> result = new ArrayList<ProfileDto>();
