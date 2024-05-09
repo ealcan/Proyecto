@@ -101,23 +101,32 @@ public class UserController {
         else {
 
 	        userRepository.save(user);
+	        Profile profile = new Profile();
+	        profileRepository.save(profile);
 	        RedirectView redirectView = new RedirectView();
-	        redirectView.setUrl("/profiles/"); // URL de destino
+	        redirectView.setUrl("/profiles/"+profile.getId()); // URL de destino
 	        return redirectView;
         }
     }
 
     // Actualizar un usuario existente
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") int id, @RequestBody User user) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            user.setId(id); // Aseguramos que el ID sea el correcto
-            User updatedUser = userRepository.save(user);
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public RedirectView updateUser(@PathVariable int id, @RequestBody Map<String, String> userData) {
+    	String username = userData.get("username");
+        String email = userData.get("email");
+    	
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        user.setUsername(username);
+        user.setEmail(email);
+        
+        userRepository.save(user);
+    	
+    		
+    	RedirectView redirectView = new RedirectView();
+    	redirectView.setUrl("/users/"+user.getId()); // URL de destino
+        return redirectView;
+
     }
 
     // Eliminar un usuario por su ID
@@ -250,6 +259,28 @@ public class UserController {
     	redirectView.setUrl("/profiles/"+user.getId()); // URL de destino
         return redirectView;
 
+    }
+    
+    @PutMapping("{id}/password")
+    public String changePassword(@PathVariable int id, @RequestBody Map<String, String> userData) {
+    	
+    	String email = userData.get("email");
+    	String password = userData.get("password");
+    	
+    	User user = userRepository.findById(id).orElse(null);
+    	
+    	if (user == null) {
+    		return "Cannot find the user";
+    	}
+    	
+    	else if (!user.getEmail().equals(email)) {
+    		return user.getEmail()+' '+email;
+    	}
+    	else {
+    		user.setPassword(password);
+    		userRepository.save(user);
+    		return "Contraseña actualizada";
+    	}
     }
 }
     
