@@ -33,7 +33,7 @@ public class Profile {
 
     @Lob // Para columnas BLOB
     @Column(name = "profile_image")
-    private byte[] profileImage;
+    private String profileImage;
 
     @Column(name = "name", length = 100)
     private String name;
@@ -70,11 +70,11 @@ public class Profile {
 		this.user = user;
 	}
 
-	public byte[] getProfileImage() {
+	public String getProfileImage() {
 		return profileImage;
 	}
 
-	public void setProfileImage(byte[] profileImage) {
+	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
 

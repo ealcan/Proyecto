@@ -6,11 +6,11 @@
     <title>EcoSocial</title>
 </head>
 <body>
-    <ul th:each="win : ${userWins}">
-     	<li th:text="${win.name}"></li>
-        <li th:text="${win.description}"></li>
-        <li th:text="${win.rewardsPoints}"></li>
+    <h1>Perfil</h1>
+    <ul>
+        <li>Nombre: <span th:text="${profile.name}"></span></li>
+        <li>Apellido: <span th:text="${profile.lastName}"></span></li>
     </ul>
-    
+    <img th:src="${profile.profile_image}" alt="Imagen de perfil" height="120" width="100">
 </body>
 </html>

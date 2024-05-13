@@ -14,6 +14,7 @@ public class ProfileDto {
 	private String lastName;
 	private String username;
 	private double points;
+	private String profile_image;
 	private Set<Wins> wins;
 	private Set<Rewards> rewards;
 	private Set<Post> posts;
@@ -74,6 +75,18 @@ public class ProfileDto {
 
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
+	}
+
+
+
+	public String getProfile_image() {
+		return profile_image;
+	}
+
+
+
+	public void setProfile_image(String profile_image) {
+		this.profile_image = profile_image;
 	}
 	
 	

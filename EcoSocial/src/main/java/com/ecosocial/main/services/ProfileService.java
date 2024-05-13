@@ -33,6 +33,7 @@ public class ProfileService {
 			ProfileDto profileDto = new ProfileDto();
 			profileDto.setName(u.getProfile().getName());
 			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setProfile_image(u.getProfile().getProfileImage());
 			profileDto.setUsername(u.getUsername());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
@@ -50,6 +51,7 @@ public class ProfileService {
 			ProfileDto profileDto = new ProfileDto();
 			profileDto.setName(u.getProfile().getName());
 			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setProfile_image(u.getProfile().getProfileImage());
 			profileDto.setUsername(u.getUsername());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
@@ -62,6 +64,7 @@ public class ProfileService {
 			ProfileDto profileDto = new ProfileDto();
 			profileDto.setName(u.getProfile().getName());
 			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setProfile_image(u.getProfile().getProfileImage());
 			profileDto.setUsername(u.getUsername());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
@@ -87,6 +90,7 @@ public class ProfileService {
 			profileDto.setPoints(r.getUser().getPoints());
 			profileDto.setName(r.getName());
 			profileDto.setLastName(r.getLastname());
+			profileDto.setProfile_image(r.getProfileImage());
 			profileDto.setRewards(r.getUser().getRewards());
 			profileDto.setWins(r.getUser().getWins());
 			profileDto.setPosts(r.getPosts());
@@ -109,6 +113,7 @@ public class ProfileService {
 			profileDto.setPoints(r.getUser().getPoints());
 			profileDto.setName(r.getName());
 			profileDto.setLastName(r.getLastname());
+			profileDto.setProfile_image(r.getProfileImage());
 			profileDto.setRewards(r.getUser().getRewards());
 			profileDto.setWins(r.getUser().getWins());
 			profileDto.setPosts(r.getPosts());
@@ -125,6 +130,7 @@ public class ProfileService {
 		profileDto.setPoints(profile.getUser().getPoints());
 		profileDto.setName(profile.getName());
 		profileDto.setLastName(profile.getLastname());
+		profileDto.setProfile_image(profile.getProfileImage());
 		profileDto.setRewards(profile.getUser().getRewards());
 		profileDto.setWins(profile.getUser().getWins());
 		profileDto.setPosts(profile.getPosts());

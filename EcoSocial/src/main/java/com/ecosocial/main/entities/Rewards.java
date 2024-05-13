@@ -30,6 +30,9 @@ public class Rewards {
     @Column(name = "price_points")
     private double pricePoints;
     
+    @Column(name = "image")
+    private String image;
+    
     @JsonIgnore
     @ManyToMany(mappedBy = "rewards")
     private Set<User> users = new HashSet<>();
@@ -74,6 +77,16 @@ public class Rewards {
 	public void setPricePoints(double pricePoints) {
 		this.pricePoints = pricePoints;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
 
     // Getters y setters
     
