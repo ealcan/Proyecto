@@ -1,0 +1,49 @@
+
+/*import '../../App.css', ponerlo en los componentes*/ 
+/* Archivo.css */
+
+/*Modificación del color base de la App/WEB*/
+.colorbase {
+  background-color: #00acc1 !important; /* Cyan */
+}
+
+/*Características del Logo*/
+.logo-AWSNT-cabecera {
+  /*Redimensionar Logo*/
+  width: 80px;
+  height: 80px;
+}
+
+/*Características imagen del Logo*/
+.imagen-logo-AWSNT {
+  /*Redimensionar Logo*/
+  width: 275px;
+  height:275px;
+}
+
+/*Imagen del Logo como Background*/
+.background-Logo{
+  background-image: url(./assets/Cabecera-Tierra.jpeg);
+}
+
+/*Tamaño letra H1*/
+.letraGrosor {
+  text-shadow: 2.75px 2.75px 2.25px #3b3a3a;
+}
+
+.letraRewards{
+  font-family: "Bebas Neue", sans-serif; 
+  color: "black"; 
+  text-shadow: 4px 4px 4px  #171717;
+}
+
+.div-class {
+  text-align: justify;
+}
+.image-class-opacity {
+  /* Ajusta el valor según la intensidad de la tonalidad que desees */
+  filter: opacity(0.90);
+  /* filter: contrast(120%);  */
+  filter: saturate(0.45);
+}
+

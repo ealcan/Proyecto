@@ -1,17 +1,24 @@
 package com.ecosocial.main.entities;
 
+import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name="profile")
 public class Profile {
@@ -19,8 +26,9 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "profile") // La clave primaria que hace referencia al ID de User
+    @JoinColumn(name = "id") // La clave primaria que hace referencia al ID de User
     private User user;
 
     @Lob // Para columnas BLOB
@@ -32,6 +40,19 @@ public class Profile {
 
     @Column(name = "lastname", length = 100)
     private String lastname;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    private Set<Post> posts;
+    
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "post_likes",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private List<Post> likedPosts;
 
 	public int getId() {
 		return id;
@@ -72,7 +93,16 @@ public class Profile {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
     
+	
     //Getters y Setters
     
     

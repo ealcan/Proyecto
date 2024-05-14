@@ -1,5 +1,6 @@
 package com.ecosocial.main.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecosocial.main.controller.dto.PostDto;
 import com.ecosocial.main.controller.dto.ProfileDto;
+import com.ecosocial.main.entities.Post;
 import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.repository.ProfileRepository;
 import com.ecosocial.main.services.ProfileService;
@@ -97,4 +100,27 @@ public class ProfileController {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
 	    }
+	    
+	    //Ver publicaciones del perfil
+	    @GetMapping("/{id}/posts")
+	    public List<PostDto> profilePosts(@PathVariable("id") int id){
+	    	Profile profile =  profileService.getProfileById2(id);
+	    	
+	    	List<Post> posts = new ArrayList<>();
+	    	
+	    	List<PostDto> result = new ArrayList<>();
+	    	
+	    	for (Post post : profile.getPosts()) {
+	    		posts.add(post);
+	    	}
+	    	for (Post p : posts) {
+	        		PostDto postDto = new PostDto();
+	        		postDto.setTitle(p.getTitle());
+	        		postDto.setContent(p.getContent());
+	        		postDto.setNumLikes(postDto.calculateNumLikes(p.getLikes()));
+	        		postDto.setPublishedAt(p.getPublishedAt());
+	        		result.add(postDto);
+	    }
+	    	return result;
+	}
 }

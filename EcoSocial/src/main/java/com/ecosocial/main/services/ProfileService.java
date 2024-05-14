@@ -2,6 +2,7 @@ package com.ecosocial.main.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.ecosocial.main.entities.Profile;
 import com.ecosocial.main.entities.User;
 import com.ecosocial.main.repository.FriendshipRepository;
 import com.ecosocial.main.repository.ProfileRepository;
+import com.ecosocial.main.repository.UserRepository;
 
 @Service
 public class ProfileService {
@@ -20,6 +22,9 @@ public class ProfileService {
 	
 	@Autowired
 	FriendshipRepository friendshipRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	public List<ProfileDto> getFriendshipByUser(Integer userId){
 		List<User> friendship = friendshipRepository.findFriendUsersByUserId1(userId);
@@ -31,14 +36,44 @@ public class ProfileService {
 			profileDto.setUsername(u.getUsername());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
+			profileDto.setWins(u.getWins());
+			profileDto.getRankingPoints();
+			result.add(profileDto);
+		}
+		return result;
+	}
+	
+	public List<ProfileDto> getFriendshipByUser2(Integer userId){
+		List<User> friendship = friendshipRepository.findFriendUsersByUserId1(userId);
+		List<ProfileDto> result = new ArrayList<ProfileDto>();
+		for (User u : friendship) {
+			ProfileDto profileDto = new ProfileDto();
+			profileDto.setName(u.getProfile().getName());
+			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setUsername(u.getUsername());
+			profileDto.setPoints(u.getPoints());
+			profileDto.setRewards(u.getRewards());
+			profileDto.setWins(u.getWins());
+			profileDto.getRankingPoints();
+			result.add(profileDto);
+		}
+		List<User> user = userRepository.findUserById(userId);
+		for (User u : user) {
+			ProfileDto profileDto = new ProfileDto();
+			profileDto.setName(u.getProfile().getName());
+			profileDto.setLastName(u.getProfile().getLastname());
+			profileDto.setUsername(u.getUsername());
+			profileDto.setPoints(u.getPoints());
+			profileDto.setRewards(u.getRewards());
+			profileDto.setWins(u.getWins());
 			result.add(profileDto);
 		}
 		return result;
 	}
 	
 	public List<ProfileDto> getRanking (Integer userid){
-		List<ProfileDto> ranking = getFriendshipByUser(userid);
-		ranking.sort((u1, u2) -> Double.compare(u2.getPoints(), u1.getPoints()));
+		List<ProfileDto> ranking = getFriendshipByUser2(userid);
+		ranking.sort((u1, u2) -> Double.compare(u2.getRankingPoints(), u1.getRankingPoints()));
 		
 		return ranking;
 	}
@@ -53,6 +88,9 @@ public class ProfileService {
 			profileDto.setName(r.getName());
 			profileDto.setLastName(r.getLastname());
 			profileDto.setRewards(r.getUser().getRewards());
+			profileDto.setWins(r.getUser().getWins());
+			profileDto.setPosts(r.getPosts());
+			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
 		return result;
@@ -66,6 +104,15 @@ public class ProfileService {
 		profileDto.setName(profile.getName());
 		profileDto.setLastName(profile.getLastname());
 		profileDto.setRewards(profile.getUser().getRewards());
+		profileDto.setWins(profile.getUser().getWins());
+		profileDto.setPosts(profile.getPosts());
+		profileDto.getRankingPoints();
 		return profileDto;
+	}
+	
+	public Profile getProfileById2(Integer ProfileId) {
+		Profile profile = profileRepository.findById(ProfileId).orElse(null);
+		
+		return profile;
 	}
 }

@@ -3,11 +3,8 @@ package com.ecosocial.main.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,10 +13,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+
+import com.ecosocial.main.services.*;
 
 @Data
 @Entity
@@ -41,9 +39,13 @@ public class User {
     @Column(name = "points")
     private double points;
 
-    @ManyToOne
-    @JoinColumn(name = "id_wins")
-    private Wins wins;
+    @ManyToMany
+    @JoinTable(
+        name = "user_wins",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "wins_id")
+    )
+    private Set<Wins> wins = new HashSet<>();
     
     @ManyToMany
     @JoinTable(
@@ -65,12 +67,25 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id")
     private Profile profile;
-    
     // Getters y setters
+    
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+
 
 	public int getId() {
 		return id;
 	}
+
 	
 	
 	public Set<Rewards> getRewards() {
@@ -82,6 +97,15 @@ public class User {
 		this.rewards = rewards;
 	}
 
+	
+	public Set<Wins> getWins() {
+		return wins;
+	}
+
+
+	public void setWins(Set<Wins> win) {
+		this.wins = win;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -100,8 +124,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        this.password = encoder.encode(password);
+        this.password = password;
     }
 
 	public String getEmail() {
@@ -119,14 +142,18 @@ public class User {
 	public void setPoints(double points) {
 		this.points = points;
 	}
+	
+    public Set<Wins> getVerifiedWins() {
+        UserWinsService userWinService = new UserWinsService();
+        return userWinService.getVerifiedWinsForUser(this);
+    }
 
-	public Wins getWins() {
-		return wins;
-	}
+    public Set<Wins> getUnverifiedWins() {
+        UserWinsService userWinService = new UserWinsService();
+        return userWinService.getUnVerifiedWinsForUser(this);
+    }
 
-	public void setWins(Wins wins) {
-		this.wins = wins;
-	}
+
 
 	
 }
