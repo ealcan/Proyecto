@@ -15,7 +15,8 @@ import lombok.Data;
 
 @Data
 public class UserDto {
-
+	
+	private int id;
 	private String username;	
 	private String email;
 	private double points;
@@ -70,6 +71,16 @@ public class UserDto {
 	}
 	public void setWins(Set<Wins> wins) {
 		this.wins = wins;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

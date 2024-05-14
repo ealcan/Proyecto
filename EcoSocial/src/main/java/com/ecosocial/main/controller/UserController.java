@@ -82,6 +82,12 @@ public class UserController {
     public List<UserDto> getUser(@PathVariable("id") Integer userId) {
     	return userService.getUserById(userId);
     }
+    
+    //Obtener un usuario por su username
+    @GetMapping("/find/{username}")
+    public List<UserDto> getUserbyName(@PathVariable("username") String username){
+    	return userService.getUserByUsername(username);
+    }
 
     // Crear un nuevo usuario
     @PostMapping("/")

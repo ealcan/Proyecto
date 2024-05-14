@@ -35,6 +35,7 @@ public class UserService {
 		
 		for (User u : data) {
 			UserDto userDto = new UserDto();
+			userDto.setId(u.getId());
 			userDto.setUsername(u.getUsername());
 			userDto.setEmail(u.getEmail());
 			userDto.setPoints(u.getPoints());
@@ -63,6 +64,7 @@ public class UserService {
 		List<UserDto> result = new ArrayList<UserDto>();
 		for (User u: data) {
 			UserDto userDto = new UserDto();
+			userDto.setId(u.getId());
 			userDto.setUsername(u.getUsername());
 			userDto.setEmail(u.getEmail());
 			userDto.setPoints(u.getPoints());
@@ -73,6 +75,27 @@ public class UserService {
 		}
 		return result;
 	}
+    
+    public List<UserDto> getUserByUsername(String username) {
+		List<User> data = new ArrayList<User>();
+		if (username != null) {
+			data = userRepository.findUserByUsername(username);			
+		}
+		List<UserDto> result = new ArrayList<UserDto>();
+		for (User u: data) {
+			UserDto userDto = new UserDto();
+			userDto.setId(u.getId());
+			userDto.setUsername(u.getUsername());
+			userDto.setEmail(u.getEmail());
+			userDto.setPoints(u.getPoints());
+			userDto.setRewards(u.getRewards());
+			userDto.setWins(u.getWins());
+			userDto.getRankingPoints();
+			result.add(userDto);
+		}
+		return result;
+	}
+    
 
     public void assignWin(User user, Wins win) {
         
