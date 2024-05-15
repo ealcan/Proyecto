@@ -1,5 +1,6 @@
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import React, { useState, useEffect } from 'react';
 
 import {
   MDBCol,
@@ -19,7 +20,108 @@ import {
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
 
-export default function ProfilePage() {
+export interface Profile {
+  name: string
+  lastName: string
+  username: string
+  email: string
+  points: number
+  profile_image: string
+  wins: Win[]
+  rewards: Reward[]
+  posts: Post[]
+  rankingPoints: number
+}
+
+export interface Win {
+  id: number
+  name: string
+  description: string
+  rewardsPoints: number
+  image: any
+}
+
+export interface Reward {
+  id: number
+  description: string
+  name: string
+  pricePoints: number
+  image: any
+}
+
+export interface Post {
+  id: number
+  title: string
+  content: string
+  profile: Profile
+  likes: Like[]
+  publishedAt: string
+}
+
+export interface Profile {
+  id: number
+  profileImage: string
+  name: string
+  lastname: string
+}
+
+export interface Like {
+  id: number
+  profileImage: string
+  name: string
+  lastname: string
+}
+const ProfilePage: React.FC = () => {
+  const [personas, setPersonas] = useState<Profile[]>([]);
+
+  const [wins, setWins] = useState<Win[]>([]);
+
+  useEffect(() => {
+      const fetchUsuarios = async () => {
+          try {
+              const response = await fetch('http://localhost:8080/profiles/1');
+              if (!response.ok) {
+                  throw new Error('Failed to fetch data');
+              }
+              const data = await response.json();
+
+              const personasData: Profile[] = {
+                  name: data.name,
+                  lastName: data.lastName,
+                  profile_image: data.profile_image,
+                  points: data.points,
+                  username: data.username,
+                  email: data.email,
+                  wins: data.wins,
+                  rewards: data.rewards,
+                  posts: data.posts,
+                  rankingPoints: data.rankingPoints,
+              };
+
+              if (data.wins && data.wins.length > 0) {
+                const winData: Win[] = data.wins.map((win: any) => ({
+                    id: win.id,
+                    name: win.name,
+                    description: win.description,
+                    rewardsPoints: win.rewardsPoints,
+                    image: win.image
+                }));
+                setWins(winData); // Guardamos todas las wins en el estado de wins
+            } else {
+                setWins([]); // Establecemos un array vacío si no hay wins
+            }
+        
+
+              setPersonas(personasData);
+          } catch (error) {
+              console.error('Error al obtener datos de la API:', error);
+          }
+      };
+
+      fetchUsuarios();
+  }, []);
+
+
   return (
     <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">
@@ -42,14 +144,14 @@ export default function ProfilePage() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src={personas.profile_image}
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: '150px' }}
+                  style={{ width: '150px', height: '150px' }}
                   fluid />
-                <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                <p className="text-muted mb-1">@{personas.username}</p>
                 <div className="d-flex justify-content-center mb-2">
+                  <br />
                   <MDBBtn>Follow</MDBBtn>
                   <MDBBtn outline className="ms-1">Message</MDBBtn>
                 </div>
@@ -91,7 +193,7 @@ export default function ProfilePage() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                    <MDBCardText className="text-muted">{personas.name} {personas.lastName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -100,34 +202,25 @@ export default function ProfilePage() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">example@example.com</MDBCardText>
+                    <MDBCardText className="text-muted">{personas.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Phone</MDBCardText>
+                    <MDBCardText>Points</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(097) 234-5678</MDBCardText>
+                    <MDBCardText className="text-muted">{personas.points}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
+                    <MDBCardText>Ranking Points</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
+                    <MDBCardText className="text-muted">{personas.rankingPoints}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
@@ -169,8 +262,8 @@ export default function ProfilePage() {
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
+                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> {wins.name}</MDBCardText>
+                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>{wins.description}</MDBCardText>
                     <MDBProgress className="rounded">
                       <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                     </MDBProgress>
@@ -205,4 +298,4 @@ export default function ProfilePage() {
   );
 }
 
-
+export default ProfilePage;
