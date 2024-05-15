@@ -25,7 +25,9 @@ public class WinService {
 		List<WinsDto> result = new ArrayList<WinsDto>();
 		for (Wins r : data) {
 			WinsDto winsDto = new WinsDto();
+			winsDto.setId(r.getId());
 			winsDto.setName(r.getName());
+			winsDto.setImage(r.getImage());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			winsDto.getDifficulty();
@@ -38,7 +40,9 @@ public class WinService {
 	public WinsDto getWinById(Integer winId) {
 		Wins win = winsRepository.findById(winId).orElse(null);
 		WinsDto winsDto = new WinsDto();
+		winsDto.setId(win.getId());
 		winsDto.setName(win.getName());
+		winsDto.setImage(win.getImage());
 		winsDto.setDescription(win.getDescription());
 		winsDto.setRewardsPoints(win.getRewardsPoints());
 		winsDto.getDifficulty();
@@ -51,7 +55,9 @@ public class WinService {
 		List<WinsDto> result = new ArrayList<WinsDto>();
 		for (Wins r : data) {
 			WinsDto winsDto = new WinsDto();
+			winsDto.setId(r.getId());
 			winsDto.setName(r.getName());
+			winsDto.setImage(r.getImage());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			winsDto.getDifficulty();
@@ -67,7 +73,9 @@ public class WinService {
 		List<WinsDto> result = new ArrayList<WinsDto>();
 		for (Wins r : data) {
 			WinsDto winsDto = new WinsDto();
+			winsDto.setId(r.getId());
 			winsDto.setName(r.getName());
+			winsDto.setImage(r.getImage());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			winsDto.getDifficulty();
@@ -87,7 +95,9 @@ public class WinService {
 		List<WinsDto> result = new ArrayList<WinsDto>();
 		for (Wins r : data) {
 			WinsDto winsDto = new WinsDto();
+			winsDto.setId(r.getId());
 			winsDto.setName(r.getName());
+			winsDto.setImage(r.getImage());
 			winsDto.setDescription(r.getDescription());
 			winsDto.setRewardsPoints(r.getRewardsPoints());
 			winsDto.getDifficulty();

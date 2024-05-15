@@ -6,11 +6,11 @@
     <title>EcoSocial</title>
 </head>
 <body>
-    <h1>Perfil</h1>
+    <h1>Rewards</h1>
     <ul>
-        <li>Nombre: <span th:text="${profile.name}"></span></li>
-        <li>Apellido: <span th:text="${profile.lastName}"></span></li>
+        <li>Title: <span th:text="${reward.name}"></span></li>
+        <li>Description: <span th:text="${reward.description}"></span></li>
     </ul>
-    <img th:src="${profile.profile_image}" alt="Imagen de perfil" height="120" width="100">
+    <img th:src="${reward.image}" alt="Imagen de perfil" height="120" width="100">
 </body>
 </html>

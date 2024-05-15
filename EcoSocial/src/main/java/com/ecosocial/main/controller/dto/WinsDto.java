@@ -14,6 +14,8 @@ import lombok.Setter;
 public class WinsDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private int id;
 
 	private String name;
 	
@@ -24,6 +26,8 @@ public class WinsDto implements Serializable {
 	private Double rewardsPoints;
 	
 	private String difficulty;
+	
+	private String image;
 	
     public String getDifficulty() {
     	
@@ -73,6 +77,22 @@ public class WinsDto implements Serializable {
 
 	public void setRewardsPoints(Double rewardsPoints) {
 		this.rewardsPoints = rewardsPoints;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

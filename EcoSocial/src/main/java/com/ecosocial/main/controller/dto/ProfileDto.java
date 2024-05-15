@@ -13,6 +13,7 @@ public class ProfileDto {
 	private String name;
 	private String lastName;
 	private String username;
+	private String email;
 	private double points;
 	private String profile_image;
 	private Set<Wins> wins;
@@ -87,6 +88,18 @@ public class ProfileDto {
 
 	public void setProfile_image(String profile_image) {
 		this.profile_image = profile_image;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

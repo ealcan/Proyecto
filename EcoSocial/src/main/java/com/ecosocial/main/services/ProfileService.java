@@ -35,9 +35,11 @@ public class ProfileService {
 			profileDto.setLastName(u.getProfile().getLastname());
 			profileDto.setProfile_image(u.getProfile().getProfileImage());
 			profileDto.setUsername(u.getUsername());
+			profileDto.setEmail(u.getEmail());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
 			profileDto.setWins(u.getWins());
+			profileDto.setPosts(u.getProfile().getPosts());
 			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
@@ -53,9 +55,11 @@ public class ProfileService {
 			profileDto.setLastName(u.getProfile().getLastname());
 			profileDto.setProfile_image(u.getProfile().getProfileImage());
 			profileDto.setUsername(u.getUsername());
+			profileDto.setEmail(u.getEmail());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
 			profileDto.setWins(u.getWins());
+			profileDto.setPosts(u.getProfile().getPosts());
 			profileDto.getRankingPoints();
 			result.add(profileDto);
 		}
@@ -66,8 +70,10 @@ public class ProfileService {
 			profileDto.setLastName(u.getProfile().getLastname());
 			profileDto.setProfile_image(u.getProfile().getProfileImage());
 			profileDto.setUsername(u.getUsername());
+			profileDto.setEmail(u.getEmail());
 			profileDto.setPoints(u.getPoints());
 			profileDto.setRewards(u.getRewards());
+			profileDto.setPosts(u.getProfile().getPosts());
 			profileDto.setWins(u.getWins());
 			result.add(profileDto);
 		}
@@ -87,6 +93,7 @@ public class ProfileService {
 		for (Profile r : profiles) {
 			ProfileDto profileDto = new ProfileDto();
 			profileDto.setUsername(r.getUser().getUsername());
+			profileDto.setEmail(r.getUser().getEmail());
 			profileDto.setPoints(r.getUser().getPoints());
 			profileDto.setName(r.getName());
 			profileDto.setLastName(r.getLastname());
@@ -110,6 +117,7 @@ public class ProfileService {
 		for (Profile r : profiles) {
 			ProfileDto profileDto = new ProfileDto();
 			profileDto.setUsername(r.getUser().getUsername());
+			profileDto.setEmail(r.getUser().getEmail());
 			profileDto.setPoints(r.getUser().getPoints());
 			profileDto.setName(r.getName());
 			profileDto.setLastName(r.getLastname());
@@ -127,6 +135,7 @@ public class ProfileService {
 		Profile profile = profileRepository.findById(ProfileId).orElse(null);
 		ProfileDto profileDto = new ProfileDto();
 		profileDto.setUsername(profile.getUser().getUsername());
+		profileDto.setEmail(profile.getUser().getEmail());
 		profileDto.setPoints(profile.getUser().getPoints());
 		profileDto.setName(profile.getName());
 		profileDto.setLastName(profile.getLastname());

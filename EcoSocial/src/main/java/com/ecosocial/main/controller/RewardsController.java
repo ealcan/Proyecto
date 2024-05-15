@@ -6,13 +6,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ecosocial.main.controller.dto.ProfileDto;
 import com.ecosocial.main.controller.dto.RewardsDto;
 import com.ecosocial.main.entities.Rewards;
 import com.ecosocial.main.entities.User;
@@ -71,4 +74,15 @@ public class RewardsController {
 			return new ResponseEntity<>(createReward, HttpStatus.CREATED);
 		
 	}	
+	
+    //Test
+    @GetMapping("/html")
+    public ModelAndView showProfile(Model model) {
+        // Aquí obtienes el perfil de alguna manera, por ejemplo, desde una base de datos
+        RewardsDto reward = rewardsService.getRewardById(2); // Suponiendo que tienes un método obtenerPerfil() que devuelve un objeto Profile
+        model.addAttribute("reward", reward);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index.html");
+        return modelAndView;
+    }
 }

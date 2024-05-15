@@ -8,6 +8,7 @@ import com.ecosocial.main.entities.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PostDto {
+	private String name;
 	private String title;
 	private String content;
 	private int numLikes;
@@ -44,6 +45,12 @@ public class PostDto {
     public int calculateNumLikes(Set<Profile> profiles) {
         return profiles.size();
     }
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	
 	

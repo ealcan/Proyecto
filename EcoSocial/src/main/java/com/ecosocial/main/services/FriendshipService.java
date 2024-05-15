@@ -38,8 +38,14 @@ public class FriendshipService {
         	Friendship userFriend = new Friendship();
             userFriend.setUser1(user);
             userFriend.setUser2(friend);
+            
+            Friendship reverse = new Friendship();
+            reverse.setUser1(friend);
+            reverse.setUser2(user);
 
             friendshipRepository.save(userFriend);
+            
+            friendshipRepository.save(reverse);
         
     }
 	

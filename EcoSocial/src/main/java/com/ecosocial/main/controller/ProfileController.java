@@ -1,8 +1,11 @@
 package com.ecosocial.main.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -125,6 +128,7 @@ public class ProfileController {
 	    	}
 	    	for (Post p : posts) {
 	        		PostDto postDto = new PostDto();
+	        		postDto.setName(p.getProfile().getName());
 	        		postDto.setTitle(p.getTitle());
 	        		postDto.setContent(p.getContent());
 	        		postDto.setNumLikes(postDto.calculateNumLikes(p.getLikes()));
@@ -134,14 +138,26 @@ public class ProfileController {
 	    	return result;
 	}
 	    
-	    //Test
-	    @GetMapping("/html")
-	    public ModelAndView showProfile(Model model) {
-	        // Aquí obtienes el perfil de alguna manera, por ejemplo, desde una base de datos
-	        ProfileDto profile = getProfile(1); // Suponiendo que tienes un método obtenerPerfil() que devuelve un objeto Profile
-	        model.addAttribute("profile", profile);
-	        ModelAndView modelAndView = new ModelAndView();
-	        modelAndView.setViewName("index.html");
-	        return modelAndView;
+	    @GetMapping("/feed/{id}")
+	    public ResponseEntity<List<PostDto>> getFeed(@PathVariable("id") Integer profileId) {
+	        List<ProfileDto> profiles = profileService.getFriendshipByUser2(profileId);
+	        List<PostDto> feed = new ArrayList<>();
+	        
+	        for (ProfileDto profile : profiles) {
+	            for (Post post : profile.getPosts()) {
+	                PostDto postDto = new PostDto();
+	                postDto.setName(post.getProfile().getName());
+	                postDto.setTitle(post.getTitle());
+	                postDto.setContent(post.getContent());
+	                postDto.setNumLikes(postDto.calculateNumLikes(post.getLikes()));
+	                postDto.setPublishedAt(post.getPublishedAt());
+	                feed.add(postDto);
+	            }
+	        }
+	        feed.sort(Comparator.comparing(PostDto::getPublishedAt).reversed());
+	        
+	        return new ResponseEntity<>(feed, HttpStatus.OK);
 	    }
+
+
 }

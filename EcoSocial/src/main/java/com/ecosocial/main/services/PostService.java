@@ -32,6 +32,7 @@ public class PostService {
     	
     	for (Post p : post) {
     		PostDto postDto = new PostDto();
+    		postDto.setName(p.getProfile().getName());
     		postDto.setTitle(p.getTitle());
     		postDto.setContent(p.getContent());
     		postDto.setNumLikes(postDto.calculateNumLikes(p.getLikes()));
@@ -52,6 +53,7 @@ public class PostService {
         List<PostDto> result = new ArrayList<PostDto>();
         for (Post p: data) {
         	PostDto postDto = new PostDto();
+        	postDto.setName(p.getProfile().getName());
     		postDto.setTitle(p.getTitle());
     		postDto.setContent(p.getContent());
     		postDto.setNumLikes(postDto.calculateNumLikes(p.getLikes()));

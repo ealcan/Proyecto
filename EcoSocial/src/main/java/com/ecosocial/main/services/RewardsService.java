@@ -26,7 +26,9 @@ public class RewardsService {
 		List<RewardsDto> result = new ArrayList<RewardsDto>();
 		for (Rewards r : data) {
 			RewardsDto rewardsDto = new RewardsDto();
+			rewardsDto.setId(r.getId());
 			rewardsDto.setName(r.getName());
+			rewardsDto.setImage(r.getImage());
 			rewardsDto.setDescription(r.getDescription());
 			rewardsDto.setPricePoints(r.getPricePoints());
 			result.add(rewardsDto);
@@ -38,7 +40,9 @@ public class RewardsService {
 	public RewardsDto getRewardById(Integer RewardId) {
 		Rewards reward = rewardsRepository.findById(RewardId).orElse(null);
 		RewardsDto rewardsDto = new RewardsDto();
+		rewardsDto.setId(reward.getId());
 		rewardsDto.setName(reward.getName());
+		rewardsDto.setImage(reward.getImage());
 		rewardsDto.setDescription(reward.getDescription());
 		rewardsDto.setPricePoints(reward.getPricePoints());
         return rewardsDto;
@@ -50,7 +54,9 @@ public class RewardsService {
 		List<RewardsDto> result = new ArrayList<RewardsDto>();
 		for (Rewards r : data) {
 			RewardsDto rewardsDto = new RewardsDto();
+			rewardsDto.setId(r.getId());
 			rewardsDto.setName(r.getName());
+			rewardsDto.setImage(r.getImage());
 			rewardsDto.setDescription(r.getDescription());
 			rewardsDto.setPricePoints(r.getPricePoints());
 			result.add(rewardsDto);
@@ -65,7 +71,9 @@ public class RewardsService {
 		List<RewardsDto> result = new ArrayList<RewardsDto>();
 		for (Rewards r : data) {
 			RewardsDto rewardsDto = new RewardsDto();
+			rewardsDto.setId(r.getId());
 			rewardsDto.setName(r.getName());
+			rewardsDto.setImage(r.getImage());
 			rewardsDto.setDescription(r.getDescription());
 			rewardsDto.setPricePoints(r.getPricePoints());
 			result.add(rewardsDto);
@@ -84,7 +92,9 @@ public class RewardsService {
 		List<RewardsDto> result = new ArrayList<RewardsDto>();
 		for (Rewards r : data) {
 			RewardsDto rewardsDto = new RewardsDto();
+			rewardsDto.setId(r.getId());
 			rewardsDto.setName(r.getName());
+			rewardsDto.setImage(r.getImage());
 			rewardsDto.setDescription(r.getDescription());
 			rewardsDto.setPricePoints(r.getPricePoints());
 			result.add(rewardsDto);
