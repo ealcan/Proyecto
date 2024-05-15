@@ -76,6 +76,11 @@ const ProfilePage: React.FC = () => {
 
   const [wins, setWins] = useState<Win[]>([]);
 
+
+  const [rewards, setRewards] = useState<Reward[]>([]);
+
+  const [users, setUsers] = useState<Profile[]>([]);
+
   useEffect(() => {
       const fetchUsuarios = async () => {
           try {
@@ -97,25 +102,45 @@ const ProfilePage: React.FC = () => {
                   posts: data.posts,
                   rankingPoints: data.rankingPoints,
               };
-
-              if (data.wins && data.wins.length > 0) {
-                const winData: Win[] = data.wins.map((win: any) => ({
-                    id: win.id,
-                    name: win.name,
-                    description: win.description,
-                    rewardsPoints: win.rewardsPoints,
-                    image: win.image
-                }));
-                setWins(winData); // Guardamos todas las wins en el estado de wins
-            } else {
-                setWins([]); // Establecemos un array vacío si no hay wins
-            }
         
+              const winsArray: Win[] = data.wins;
+
+              const rewardsArray: Reward[] = data.rewards;
+
+
 
               setPersonas(personasData);
+              setWins(winsArray);
+              setRewards(rewardsArray);
           } catch (error) {
               console.error('Error al obtener datos de la API:', error);
           }
+
+          try {
+            const response = await fetch('http://localhost:8080/friends/ranking/1');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const data1 = await response.json();
+
+            const userData: Profile[] = data1.map((usuarioData: any, index: number) => ({
+              name: usuarioData.name,
+              lastName: usuarioData.lastName,
+              profile_image: usuarioData.profile_image,
+              points: usuarioData.points,
+              username: usuarioData.username,
+              wins: usuarioData.wins,
+              rewards: usuarioData.rewards,
+              posts: usuarioData.posts,
+              rankingPoints: usuarioData.rankingPoints,
+
+          }));
+      
+          setUsers(userData);
+
+        } catch (error) {
+            console.error('Error al obtener datos de la API:', error);
+        }
       };
 
       fetchUsuarios();
@@ -158,20 +183,22 @@ const ProfilePage: React.FC = () => {
               </MDBCardBody>
             </MDBCard>
 
+            {users.length > 0 ? (
+                    <>
             <MDBCard className="mb-4 mb-lg-0">
               <MDBCardBody className="p-0">
                 <MDBListGroup flush className="rounded-3">
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fas icon="globe fa-lg text-warning" />
-                    <MDBCardText>https://mdbootstrap.com</MDBCardText>
+                    <MDBCardText>{users[0].username}</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
+                    <MDBCardText>{users[1].username}</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>@mdbootstrap</MDBCardText>
+                    <MDBCardText>{users[2].username}</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
@@ -184,6 +211,10 @@ const ProfilePage: React.FC = () => {
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
+            </>
+                ) : (
+                  <p>No hay datos de ganancias disponibles.</p>
+                )}
           </MDBCol>
           <MDBCol lg="8">
             <MDBCard className="mb-4">
@@ -230,31 +261,18 @@ const ProfilePage: React.FC = () => {
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
+                  {wins.length > 0 ? (
+                    <>
+                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Wins</span> {wins[0].name}</MDBCardText>
+                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>{wins[0].description}</MDBCardText>
                     <MDBProgress className="rounded">
                       <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                     </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+                    <img src={wins[0].image} height="100" width="80"></img>
+                    </>
+                    ) : (
+                      <p>No hay datos de ganancias disponibles.</p>
+                    )}
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
@@ -262,31 +280,18 @@ const ProfilePage: React.FC = () => {
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> {wins.name}</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>{wins.description}</MDBCardText>
+                  {rewards.length > 0 ? (
+                    <>
+                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Rewards</span> {rewards[0].name}</MDBCardText>
+                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>{rewards[0].description}</MDBCardText>
                     <MDBProgress className="rounded">
                       <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                     </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+                    <img src={rewards[0].image} height="100" width="80"></img>
+                    </>
+                    ) : (
+                      <p>No hay datos de ganancias disponibles.</p>
+                    )}
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
