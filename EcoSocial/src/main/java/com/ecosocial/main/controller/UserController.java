@@ -91,24 +91,31 @@ public class UserController {
 
     // Crear un nuevo usuario
     @PostMapping("/")
-    public RedirectView createUser(@RequestBody User user) {
+    public RedirectView createUser(@RequestBody UserAndProfileData data) {
         // Verificar si el nombre de usuario ya existe en la base de datos
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(data.getUsername())) {
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl("login-error"); // URL de destino
             return redirectView;
             
         }
-        else if(userRepository.existsByEmail(user.getEmail())){
+        else if(userRepository.existsByEmail(data.getEmail())){
         	RedirectView redirectView = new RedirectView();
             redirectView.setUrl("login-error"); // URL de destino
             return redirectView;
         }
         else {
-
+        	User user = new User();
+        	user.setUsername(data.getUsername());
+        	user.setPassword(data.getPassword());
+        	user.setEmail(data.getEmail());
 	        userRepository.save(user);
+	        
 	        Profile profile = new Profile();
+        	profile.setName(data.getName());
+        	profile.setLastname(data.getLastname());
 	        profileRepository.save(profile);
+	        
 	        RedirectView redirectView = new RedirectView();
 	        redirectView.setUrl("/profiles/"+profile.getId()); // URL de destino
 	        return redirectView;
