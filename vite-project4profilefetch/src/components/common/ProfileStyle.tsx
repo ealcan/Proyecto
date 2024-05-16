@@ -1,6 +1,8 @@
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 
 import {
   MDBCol,
@@ -72,19 +74,25 @@ export interface Like {
   lastname: string
 }
 const ProfilePage: React.FC = () => {
+
+  const location = useLocation();
+  const pathnameParts = location.pathname.split('/');
+  const id = pathnameParts[pathnameParts.length - 1];
+
   const [personas, setPersonas] = useState<Profile[]>([]);
 
   const [wins, setWins] = useState<Win[]>([]);
 
-
   const [rewards, setRewards] = useState<Reward[]>([]);
+
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const [users, setUsers] = useState<Profile[]>([]);
 
   useEffect(() => {
       const fetchUsuarios = async () => {
           try {
-              const response = await fetch('http://localhost:8080/profiles/1');
+              const response = await fetch(`http://localhost:8080/profiles/${id}`);
               if (!response.ok) {
                   throw new Error('Failed to fetch data');
               }
@@ -107,17 +115,20 @@ const ProfilePage: React.FC = () => {
 
               const rewardsArray: Reward[] = data.rewards;
 
+              const postsArray: Post[] = data.posts;
+
 
 
               setPersonas(personasData);
               setWins(winsArray);
               setRewards(rewardsArray);
+              setPosts(postsArray);
           } catch (error) {
               console.error('Error al obtener datos de la API:', error);
           }
 
           try {
-            const response = await fetch('http://localhost:8080/friends/ranking/1');
+            const response = await fetch(`http://localhost:8080/friends/ranking/${id}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -144,7 +155,7 @@ const ProfilePage: React.FC = () => {
       };
 
       fetchUsuarios();
-  }, []);
+  }, [id]);
 
 
   return (
@@ -268,7 +279,7 @@ const ProfilePage: React.FC = () => {
                     <MDBProgress className="rounded">
                       <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                     </MDBProgress>
-                    <img src={wins[0].image} height="100" width="80"></img>
+                    <img src={wins[0].image} height="100" width="120"></img>
                     </>
                     ) : (
                       <p>No hay datos de ganancias disponibles.</p>
@@ -287,7 +298,25 @@ const ProfilePage: React.FC = () => {
                     <MDBProgress className="rounded">
                       <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                     </MDBProgress>
-                    <img src={rewards[0].image} height="100" width="80"></img>
+                    <img src={rewards[0].image} height="100" width="120"></img>
+                    </>
+                    ) : (
+                      <p>No hay datos de ganancias disponibles.</p>
+                    )}
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+
+              <MDBCol md="6">
+                <MDBCard className="mb-4 mb-md-0">
+                  <MDBCardBody>
+                  {posts.length > 0 ? (
+                    <>
+                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Post</span> {posts[0].title}</MDBCardText>
+                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>{posts[0].content}</MDBCardText>
+                    <MDBProgress className="rounded">
+                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
+                    </MDBProgress>
                     </>
                     ) : (
                       <p>No hay datos de ganancias disponibles.</p>

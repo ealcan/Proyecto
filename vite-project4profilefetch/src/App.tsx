@@ -30,7 +30,7 @@ function App() {
           <Route path="/" element={<HomeView />} />
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/ranking" element={<Ranking />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </main>
         <Footer />
