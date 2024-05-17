@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ import com.ecosocial.main.controller.dto.PostDto;
 import com.ecosocial.main.controller.dto.ProfileDto;
 import com.ecosocial.main.entities.Post;
 import com.ecosocial.main.entities.Profile;
+import com.ecosocial.main.repository.PostRepository;
 import com.ecosocial.main.repository.ProfileRepository;
 import com.ecosocial.main.services.ProfileService;
 
@@ -37,6 +39,9 @@ public class ProfileController {
 	    private ProfileRepository profileRepository;
 	 @Autowired
 	 private ProfileService profileService;
+	 
+	 @Autowired
+	 private PostRepository postRepository;
 
 	    // Obtener todos los perfiles
 	    @GetMapping
@@ -137,6 +142,22 @@ public class ProfileController {
 	    }
 	    	return result;
 	}
+	    
+	    @PostMapping("post/{id}")
+	    public Post postContent(@PathVariable int id,@RequestBody Map<String, String> postContent) {
+	    	String title = postContent.get("title");
+	        String content = postContent.get("content");
+	    	
+	    	Post post = new Post();
+	    	Profile profile = profileRepository.findProfileById(id);
+	    	post.setProfile(profile);
+	    	post.setTitle(title);
+	    	post.setContent(content);
+	    	
+	    	postRepository.save(post);
+	    	
+	    	return post;
+	    }
 	    
 	    @GetMapping("/feed/{id}")
 	    public ResponseEntity<List<PostDto>> getFeed(@PathVariable("id") Integer profileId) {
