@@ -2,6 +2,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import PuestaSol from '../../assets/PuestaSol.jpg'
 
 
 import {
@@ -158,8 +159,9 @@ const ProfilePage: React.FC = () => {
   }, [id]);
 
 
+
   return (
-    <section style={{ backgroundColor: '#eee' }}>
+    <section style={{ backgroundImage: `url(${PuestaSol})` }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol>
@@ -189,43 +191,31 @@ const ProfilePage: React.FC = () => {
                 <div className="d-flex justify-content-center mb-2">
                   <br />
                   <MDBBtn>Follow</MDBBtn>
-                  <MDBBtn outline className="ms-1">Message</MDBBtn>
                 </div>
               </MDBCardBody>
             </MDBCard>
 
-            {users.length > 0 ? (
-                    <>
+            
             <MDBCard className="mb-4 mb-lg-0">
               <MDBCardBody className="p-0">
                 <MDBListGroup flush className="rounded-3">
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fas icon="globe fa-lg text-warning" />
-                    <MDBCardText>{users[0].username}</MDBCardText>
+                <MDBListGroupItem className="d-flex justify-content-center align-items-center p-2" style={{backgroundColor: 'lightgray'}}>
+                <MDBIcon fas icon="star" className="me-2" />
+                    <MDBCardText className="lead fw-normal mb-0">Friends Ranking </MDBCardText>
+                <MDBIcon fas icon="star" className="me-2" />
                   </MDBListGroupItem>
+                  {users.map((user, index) => (
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                    <MDBCardText>{users[1].username}</MDBCardText>
+                  <MDBCardText style={{ color: index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? '#E37134' : 'black' }}>
+                #{index + 1}
+              </MDBCardText>
+              <MDBCardText>{user.username}</MDBCardText>
                   </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>{users[2].username}</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
+                   ))}
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
-            </>
-                ) : (
-                  <p>No hay datos de ganancias disponibles.</p>
-                )}
+           
           </MDBCol>
           <MDBCol lg="8">
             <MDBCard className="mb-4">
@@ -271,7 +261,7 @@ const ProfilePage: React.FC = () => {
             <MDBRow>
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
+                  <MDBCardBody className="text-center">
                   {wins.length > 0 ? (
                     <>
                     <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Wins</span> {wins[0].name}</MDBCardText>
@@ -290,7 +280,7 @@ const ProfilePage: React.FC = () => {
 
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
+                  <MDBCardBody className="text-center">
                   {rewards.length > 0 ? (
                     <>
                     <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Rewards</span> {rewards[0].name}</MDBCardText>
@@ -306,24 +296,30 @@ const ProfilePage: React.FC = () => {
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                  {posts.length > 0 ? (
-                    <>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Post</span> {posts[0].title}</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>{posts[0].content}</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                    </>
-                    ) : (
-                      <p>No hay datos de ganancias disponibles.</p>
-                    )}
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
+              {posts.map((post) => (
+              <MDBCol md="6" key={post.id} style={{marginBottom: '10px'}}>
+              <MDBCard className="mb-4 shadow-sm h-100">
+                <MDBCardBody className="d-flex flex-column">
+                  <MDBCardText className="mb-3" style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#2c3e50' }}>
+                    {post.title}
+                  </MDBCardText>
+                  <MDBCardText className="mb-4" style={{ fontSize: '1rem', color: '#7f8c8d' }}>
+                    {post.content}
+                  </MDBCardText>
+                  <MDBCardText className="position-absolute bottom-0 start-1 mb-4" style={{ fontSize: '1rem', color: '#95a5a6' }}>
+                  <MDBIcon fas icon="thumbs-up" className="me-2" />
+                  {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+                  </MDBCardText>
+                  <MDBCardText
+                    className="mt-auto text-end"
+                    style={{ fontSize: '0.875rem', color: '#bdc3c7' }}
+                  >
+                    {new Date(post.publishedAt).toLocaleDateString()}
+                  </MDBCardText>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+                              ))}
             </MDBRow>
           </MDBCol>
         </MDBRow>
