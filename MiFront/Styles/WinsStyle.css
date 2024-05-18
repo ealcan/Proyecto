@@ -1,0 +1,23 @@
+
+.borderBottomRight{
+    border-bottom-right-radius: 15px !important;
+}
+
+.borderBottomLeft{
+    border-bottom-left-radius: 15px !important;
+}
+
+.letraWins{
+    font-size: x-large;
+    color: darkcyan
+  }
+  
+  .letraWins2{
+    font-family: "Bebas Neue", sans-serif; 
+    color: darkcyan; 
+  }
+
+  .letraWins{
+    font-size: x-large;
+    color: darkcyan
+  }

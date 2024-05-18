@@ -1,0 +1,8 @@
+En el proyecto React, habría que instalar react-query y react-responsive.
+
+npm install react-query
+npm install react-responsive
+
+
+En Java, habría que anotar los @CrossOrigin(*) en los controller. También he añadido que devuelva los ID en los dtos de rewars y wins.
+Igual con la versión definitiva de Albert ya lo ha implementado.
